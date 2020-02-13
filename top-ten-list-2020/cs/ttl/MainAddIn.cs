@@ -14,6 +14,8 @@ using Xarial.XCad.SolidWorks;
 using Xarial.XCad.SolidWorks.Documents;
 using Xarial.XCad.SolidWorks.Geometry;
 using Xarial.XCad.UI.Commands;
+using Xarial.XCad.UI.Commands.Attributes;
+using Xarial.XCad.UI.Commands.Enums;
 
 namespace ttl
 {
@@ -23,16 +25,19 @@ namespace ttl
         [Icon(typeof(Resources), nameof(Resources.zoom_to_geometry))]
         [Title("Zoom Geometry To Fit")]
         [Description("Zooms geometry to fit excluding sketches and reference geometry")]
+        [CommandItemInfo(WorkspaceTypes_e.Assembly | WorkspaceTypes_e.Part)]
         ZoomGeometryToFit,
 
         [Icon(typeof(Resources), nameof(Resources.shaft_chamfer))]
         [Title("Insert Shaft Chamfer")]
         [Description("Creates a chamfer driven by base diameter and angle")]
+        [CommandItemInfo(WorkspaceTypes_e.Part)]
         InsertShaftChamfer,
 
         [Icon(typeof(Resources), nameof(Resources.hide_show_bodies))]
         [Title("Hide/Show Bodies")]
         [Description("Displays Hide/Show Bodies Property Page")]
+        [CommandItemInfo(WorkspaceTypes_e.Part)]
         HideShowBodies
     }
 
