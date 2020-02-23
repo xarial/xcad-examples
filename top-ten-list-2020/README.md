@@ -1,6 +1,6 @@
 # SOLIDWORKS Top Ten List 2020
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BuiFfv7-Qig" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Implementing SOLIDWORKS Top Ten List 2020 from scratch](https://img.youtube.com/vi/BuiFfv7-Qig/0.jpg)](https://www.youtube.com/watch?v=BuiFfv7-Qig)
 
 This examples demonstrates the implementation of 3 features from the SOLIDWORKS Top Ten List 2020
 
