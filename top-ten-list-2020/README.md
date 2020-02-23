@@ -1,5 +1,6 @@
 # SOLIDWORKS Top Ten List 2020
 
+YouTube Video Tutorial: 
 [![Implementing SOLIDWORKS Top Ten List 2020 from scratch](https://img.youtube.com/vi/BuiFfv7-Qig/0.jpg)](https://www.youtube.com/watch?v=BuiFfv7-Qig)
 
 This examples demonstrates the implementation of 3 features from the SOLIDWORKS Top Ten List 2020
