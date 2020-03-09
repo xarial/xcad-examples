@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{034BD955-830A-4BEE-AD95-F50377F85763}</ProjectGuid>
+    <ProjectGuid>{9A38C6EF-7FDA-4C24-871B-B621E6507295}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>EventsHandler</RootNamespace>
     <AssemblyName>EventsHandler</AssemblyName>
@@ -12,7 +12,6 @@
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
