@@ -19,7 +19,7 @@ namespace CubeExample
     [Title("Create Box")]
     public class BoxData : SwPropertyManagerPageHandler
     {
-        [StandardIcon(BitmapLabelType_e.Width)]
+        [StandardControlIcon(BitmapLabelType_e.Width)]
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 0, 1000, 0.001, true, 0.01, 0.005)]
         [ParameterDimension(CustomFeatureDimensionType_e.Linear)]
         public double Width { get; set; } = 0.01;
@@ -29,7 +29,7 @@ namespace CubeExample
         [ParameterDimension(CustomFeatureDimensionType_e.Linear)]
         public double Height { get; set; } = 0.01;
 
-        [StandardIcon(BitmapLabelType_e.LinearDistance)]
+        [StandardControlIcon(BitmapLabelType_e.LinearDistance)]
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 0, 1000, 0.001, true, 0.01, 0.005)]
         [ParameterDimension(CustomFeatureDimensionType_e.Linear)]
         public double Length { get; set; } = 0.01;

@@ -42,7 +42,7 @@ namespace ToggleCommand
             }
         }
 
-        private void OnCommandStateResolve(Commands_e spec, ref CommandState state)
+        private void OnCommandStateResolve(Commands_e spec, CommandState state)
         {
             switch (spec)
             {

@@ -35,13 +35,13 @@ Namespace ttl
 
         <ParameterDimension(CustomFeatureDimensionType_e.Radial)>
         <NumberBoxOptions(NumberBoxUnitType_e.Length, 0, 1000, 0.001, True, 0.01, 0.005)>
-        <StandardIcon(BitmapLabelType_e.Radius)>
+        <StandardControlIcon(BitmapLabelType_e.Radius)>
         <Title("Radius")>
         Public Property Radius As Double = 0.02
 
         <ParameterDimension(CustomFeatureDimensionType_e.Angular)>
         <NumberBoxOptions(NumberBoxUnitType_e.Angle, 0, Math.PI / 2, Math.PI / 180, False, Math.PI / 90, Math.PI / 360)>
-        <StandardIcon(BitmapLabelType_e.AngularDistance)>
+        <StandardControlIcon(BitmapLabelType_e.AngularDistance)>
         <Title("Angle")>
         Public Property Angle As Double = Math.PI / 9
 

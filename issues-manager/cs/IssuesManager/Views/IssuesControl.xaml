@@ -1,0 +1,146 @@
+﻿<UserControl x:Class="XCad.Examples.IssuesManager.Views.IssuesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:models="clr-namespace:XCad.Examples.IssuesManager.Models"
+			 xmlns:vm="clr-namespace:XCad.Examples.IssuesManager.ViewModels"
+			 xmlns:conv="clr-namespace:XCad.Examples.IssuesManager.Converters"
+			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+			 d:DataContext="{x:Type vm:IssuesVM}"
+             d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<ObjectDataProvider x:Key="severityItemsSource" MethodName="GetValues"
+							ObjectType="{x:Type sys:Enum}">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type TypeName="models:Severity_e"/>
+			</ObjectDataProvider.MethodParameters>
+		</ObjectDataProvider>
+        <ObjectDataProvider x:Key="statusItemsSource" MethodName="GetValues"
+							ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:Status_e"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <conv:IssueTitleConverter x:Key="issueTitleConv"/>
+		<conv:IssueForegroundConverter x:Key="issueForegroundConv"/>
+        <conv:ObjectIsNotNullToVisibilityConverter x:Key="objIsNotNullConv"/>
+	</UserControl.Resources>
+	<Grid Margin="5">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" DataContext="{Binding Path=ActiveIssue}"
+			  Visibility="{Binding Converter={StaticResource objIsNotNullConv}}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="Summary:" Margin="2"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Summary, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="Description:" Margin="2"/>
+			<TextBox Grid.Row="1" Grid.Column="1" Height="50" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" 
+					 AcceptsReturn="True" Margin="2"/>
+
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="Severity:" Margin="2"/>
+			<ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Source={StaticResource severityItemsSource}}"
+					  SelectedItem="{Binding Path=Severity, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+
+			<TextBlock Grid.Row="3" Grid.Column="0" Text="Status:" Margin="2"/>
+			<ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Source={StaticResource statusItemsSource}}"
+					  SelectedItem="{Binding Path=Status, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+
+			<TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontStyle="Italic" 
+					   Text="{Binding Path=Author, StringFormat={}Author: {0}}" Margin="2"/>
+
+			<TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontStyle="Italic"
+					   Text="{Binding Path=DateCreated, StringFormat={}Created: {0}}" Margin="2"/>
+
+			<Grid.Style>
+				<Style TargetType="{x:Type Grid}">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding Path=IsDeleted}" Value="True">
+							<Setter Property="IsEnabled" Value="False"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Grid.Style>
+		</Grid>
+		<ListView Grid.Row="1" ItemsSource="{Binding Path=Issues}" SelectedItem="{Binding Path=ActiveIssue}">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Foreground="{Binding Path=Severity, Converter={StaticResource issueForegroundConv}}">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource issueTitleConv}">
+									<Binding Path="Id"/>
+									<Binding Path="Summary"/>
+								</MultiBinding>
+							</TextBlock.Text>
+							<TextBlock.Style>
+								<Style TargetType="{x:Type TextBlock}">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Path=Status}" Value="{x:Static models:Status_e.Closed}">
+											<Setter Property="TextDecorations">
+												<Setter.Value>
+													<TextDecorationCollection>
+														<TextDecoration Location="Strikethrough"/>
+													</TextDecorationCollection>
+												</Setter.Value>
+											</Setter>
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Path=IsDeleted}" Value="True">
+											<Setter Property="IsEnabled" Value="False"/>
+											<Setter Property="Opacity" Value="0.25"/>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+						<TextBlock Text="*" Grid.Column="2" Visibility="Collapsed">
+							<TextBlock.Style>
+								<Style TargetType="{x:Type TextBlock}">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Path=IsDirty}" Value="True">
+											<Setter Property="Visibility" Value="Visible"/>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<Grid Grid.RowSpan="2" Background="White" Visibility="Collapsed">
+			<TextBlock Text="Open document to view issues" FontSize="24" TextAlignment="Center"
+					   TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center">
+			</TextBlock>
+			<Grid.Style>
+				<Style TargetType="{x:Type Grid}">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding}" Value="{x:Null}">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Grid.Style>
+		</Grid>
+	</Grid>
+</UserControl>

@@ -35,7 +35,7 @@ Public Class DocHandler
     End Function
 
     Function OnConfigurationChange(ConfigurationName As String, [Object] As Object, ObjectType As Integer, changeType As Integer) As Integer
-        Application.SendMsgToUser($"'{ConfigurationName}' configuration is activated in {Model.Title} [{CType(changeType, swConfigurationChangeTypes_e)}]")
+        Application.SendMsgToUser($"'{ConfigurationName}' configuration is activated in {Model.GetTitle()} [{CType(changeType, swConfigurationChangeTypes_e)}]")
         Return 0
     End Function
 

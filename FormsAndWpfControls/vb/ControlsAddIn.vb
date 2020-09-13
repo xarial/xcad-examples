@@ -63,17 +63,17 @@ Public Class ControlsAddIn
 
         Select Case cmd
             Case ControlCommands_e.CreateWinFormModelViewTab
-                CreateDocumentTab(Of WinFormsUserControl)(activeDoc)
+                CreateDocumentTabWinForm(Of WinFormsUserControl)(activeDoc)
             Case ControlCommands_e.CreateWpfModelViewTab
-                CreateDocumentTab(Of WpfUserControl)(activeDoc)
+                CreateDocumentTabWpf(Of WpfUserControl)(activeDoc)
             Case ControlCommands_e.CreateWinFormFeatMgrTab
-                CreateFeatureManagerTab(Of WinFormsUserControl)(activeDoc)
+                CreateFeatureManagerTabWinForm(Of WinFormsUserControl)(activeDoc)
             Case ControlCommands_e.CreateWpfFeatMgrTab
-                CreateFeatureManagerTab(Of WpfUserControl)(activeDoc)
+                CreateFeatureManagerTabWpf(Of WpfUserControl)(activeDoc)
             Case ControlCommands_e.CreateWinFormTaskPane
-                CreateTaskPane(Of WinFormsUserControl)()
+                CreateTaskPaneWinForm(Of WinFormsUserControl)()
             Case ControlCommands_e.CreateWpfTaskPane
-                CreateTaskPane(Of WpfUserControl)()
+                CreateTaskPaneWpf(Of WpfUserControl)()
             Case ControlCommands_e.CreateWinFormPmPage
                 m_WinFormsPMPage.Show(New WinFormsPMPage())
             Case ControlCommands_e.CreateWpfPmPage
