@@ -65,3 +65,9 @@ Example demonstrates how different size icons rendered in the menus and toolbars
 Example demonstrates how to create dynamic cascading combo boxes in the Property Manager Page which select weldment profiles (standard, type and size)
 
 [C#](WeldmentProfilesSelector/cs)
+
+# Toggle Bitmap Buttons
+
+Example demonstrates how to create Property Manager Page with checkable bitmap buttons
+
+[C#](PMPageToggleBitmapButtons/cs)
