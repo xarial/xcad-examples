@@ -14,16 +14,16 @@ Add-in is implemented using macro features. Model can be saved and reopened and 
 
 Once command is clicked Property Manager Page is displayed. Select input sketch and specify the diameter value to generate the model. Preview is updated dynamically
 
-![Inserting swept sketch](data\insert-feature.gif)
+![Inserting swept sketch](data/insert-feature.gif)
 
 ## Editing
 
 Parameters of the feature can be modified at any time, similar to standard feature of SOLIDWORKS
 
-![Editing parameters of feature](data\edit-feature.gif)
+![Editing parameters of feature](data/edit-feature.gif)
 
 ## Parametric Sketch
 
 Feature preserves parametric behavior and will automatically updated once the original sketch changes.
 
-![Geometry is updated once the sketch is updated](data\modify-sketch.gif)
+![Geometry is updated once the sketch is updated](data/modify-sketch.gif)
