@@ -71,3 +71,9 @@ Example demonstrates how to create dynamic cascading combo boxes in the Property
 Example demonstrates how to create Property Manager Page with checkable bitmap buttons
 
 [C#](PMPageToggleBitmapButtons/cs)
+
+# Sweep Sketch
+
+Example demonstrates how to insert macro feature to create solid sweep from input sketch
+
+[C#](SweepSketch/cs)
