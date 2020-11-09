@@ -46,8 +46,8 @@ Public Class ControlsAddIn
 
     End Class
 
-    Dim m_WinFormsPMPage As SwPropertyManagerPage(Of WinFormsPMPage)
-    Dim m_WpfPMPage As SwPropertyManagerPage(Of WpfPMPage)
+    Dim m_WinFormsPMPage As ISwPropertyManagerPage(Of WinFormsPMPage)
+    Dim m_WpfPMPage As ISwPropertyManagerPage(Of WpfPMPage)
 
     Public Overrides Sub OnConnect()
         AddHandler CommandManager.AddCommandGroup(Of ControlCommands_e).CommandClick, AddressOf OnButtonClick

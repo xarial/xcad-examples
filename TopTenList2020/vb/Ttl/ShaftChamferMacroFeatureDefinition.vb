@@ -18,11 +18,11 @@ Namespace ttl
     Public Class ShaftChamferMacroFeatureDefinition
         Inherits SwMacroFeatureDefinition(Of ShaftChamferData, ShaftChamferData)
 
-        Public Overrides Function CreateGeometry(ByVal app As SwApplication, ByVal model As SwDocument, ByVal data As ShaftChamferData, ByVal isPreview As Boolean, <Out> ByRef alignDim As AlignDimensionDelegate(Of ShaftChamferData)) As SwBody()
+        Public Overrides Function CreateGeometry(ByVal app As ISwApplication, ByVal model As ISwDocument, ByVal data As ShaftChamferData, ByVal isPreview As Boolean, <Out> ByRef alignDim As AlignDimensionDelegate(Of ShaftChamferData)) As ISwBody()
 
-            Dim dir = data.Edge.AdjacentEntities.OfType(Of SwPlanarFace)().First().Normal * -1
-            Dim centerPt = data.Edge.Center
-            Dim largeRad = data.Edge.Radius
+            Dim dir = data.Edge.AdjacentEntities.OfType(Of ISwPlanarFace)().First().Definition.Plane.Normal * -1
+            Dim centerPt = data.Edge.Definition.Center
+            Dim largeRad = data.Edge.Definition.Diameter / 2
 
             If data.Radius >= largeRad Then
                 Throw New Exception($"Specified radius must not exceed {Math.Round(largeRad * 1000, 2)} mm")
@@ -30,15 +30,16 @@ Namespace ttl
 
             Dim x = largeRad - data.Radius
             Dim height = x / Math.Tan(data.Angle)
-            Dim coneBody = CType(app.GeometryBuilder.CreateCone(centerPt, dir, data.Radius, largeRad, height), SwBody)
-            Dim cylBody = CType(app.GeometryBuilder.CreateCylinder(centerPt, dir, largeRad, height), SwBody)
+            Dim coneBody = CType(app.MemoryGeometryBuilder.CreateSolidCone(centerPt, dir, data.Radius * 2, largeRad * 2, height).Bodies.First(), ISwBody)
+            Dim cylBody = CType(app.MemoryGeometryBuilder.CreateSolidCylinder(centerPt, dir, largeRad * 2, height).Bodies.First(), ISwBody)
             Dim targBody = data.Body
 
             If isPreview Then
                 targBody = targBody.ToTempBody()
             End If
 
-            Dim result = targBody - (cylBody - coneBody)
+            Dim result = targBody.Substract(cylBody.Substract(coneBody).First()).First()
+
             alignDim = New AlignDimensionDelegate(Of ShaftChamferData)(
                 Sub(p, d)
                     Select Case p
@@ -60,7 +61,7 @@ Namespace ttl
                     End Select
                 End Sub)
 
-            Return New SwBody() {result}
+            Return New ISwBody() {result}
 
         End Function
     End Class

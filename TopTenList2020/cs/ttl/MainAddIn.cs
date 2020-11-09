@@ -69,11 +69,11 @@ namespace ttl
 
         private void ZoomGeometryToFit()
         {
-            var model = Application.Documents.Active as SwDocument3D;
+            var model = Application.Documents.Active as ISwDocument3D;
 
             var bbox = model.CalculateBoundingBox();
 
-            model.ActiveView.ZoomToBox(bbox);
+            model.ModelViews.Active.ZoomToBox(bbox);
         }
 
         private void HideShowBodies()

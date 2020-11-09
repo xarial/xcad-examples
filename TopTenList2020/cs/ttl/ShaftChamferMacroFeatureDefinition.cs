@@ -19,12 +19,12 @@ namespace ttl
     [Icon(typeof(Resources), nameof(Resources.shaft_chamfer))]
     public class ShaftChamferMacroFeatureDefinition : SwMacroFeatureDefinition<ShaftChamferData, ShaftChamferData>
     {
-        public override SwBody[] CreateGeometry(SwApplication app, SwDocument model, ShaftChamferData data, bool isPreview, out AlignDimensionDelegate<ShaftChamferData> alignDim)
+        public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument model, ShaftChamferData data, bool isPreview, out AlignDimensionDelegate<ShaftChamferData> alignDim)
         {
-            var dir = data.Edge.AdjacentEntities.OfType<SwPlanarFace>().First().Normal * -1;
+            var dir = data.Edge.AdjacentEntities.OfType<ISwPlanarFace>().First().Definition.Plane.Normal * -1;
 
-            var centerPt = data.Edge.Center;
-            var largeRad = data.Edge.Radius;
+            var centerPt = data.Edge.Definition.Center;
+            var largeRad = data.Edge.Definition.Diameter / 2;
 
             if (data.Radius >= largeRad)
             {
@@ -34,9 +34,9 @@ namespace ttl
             var x = largeRad - data.Radius;
             var height = x / Math.Tan(data.Angle);
 
-            var coneBody = (SwBody)app.GeometryBuilder.CreateCone(centerPt, dir, data.Radius, largeRad, height);
+            var coneBody = (ISwBody)(app.MemoryGeometryBuilder.CreateSolidCone(centerPt, dir, data.Radius * 2, largeRad * 2, height).Bodies.First());
 
-            var cylBody = (SwBody)app.GeometryBuilder.CreateCylinder(centerPt, dir, largeRad, height);
+            var cylBody = (ISwBody)(app.MemoryGeometryBuilder.CreateSolidCylinder(centerPt, dir, largeRad * 2, height).Bodies.First());
 
             var targBody = data.Body;
 
@@ -45,7 +45,7 @@ namespace ttl
                 targBody = targBody.ToTempBody();
             }
 
-            var result = targBody - (cylBody - coneBody);
+            var result = targBody.Substract(cylBody.Substract(coneBody).First()).First();
 
             alignDim = new AlignDimensionDelegate<ShaftChamferData>((p, d) =>
             {
@@ -75,7 +75,7 @@ namespace ttl
                 }
             });
 
-            return new SwBody[] { result };
+            return new ISwBody[] { result };
         }
     }
 }

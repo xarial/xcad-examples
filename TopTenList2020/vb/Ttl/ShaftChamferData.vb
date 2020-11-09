@@ -17,17 +17,17 @@ Namespace ttl
     Public Class ShaftChamferData
         Inherits SwPropertyManagerPageHandler
 
-        Private m_Edge As SwCircularEdge
+        Private m_Edge As ISwCircularEdge
 
         <ExcludeControl>
         <ParameterEditBody>
-        Public Property Body As SwBody
+        Public Property Body As ISwBody
 
-        Public Property Edge As SwCircularEdge
+        Public Property Edge As ISwCircularEdge
             Get
                 Return m_Edge
             End Get
-            Set(ByVal value As SwCircularEdge)
+            Set(ByVal value As ISwCircularEdge)
                 m_Edge = value
                 Body = value?.Body
             End Set

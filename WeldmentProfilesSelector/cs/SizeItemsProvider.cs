@@ -15,7 +15,7 @@ namespace CascadingComboBox
 
             if (parentFile != null)
             {
-                return ((app as SwApplication).Sw.GetConfigurationNames(parentFile.Path) as string[])
+                return ((app as ISwApplication).Sw.GetConfigurationNames(parentFile.Path) as string[])
                     .Select(c => new ConfigurationItem(c));
             }
             else

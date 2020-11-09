@@ -1,4 +1,5 @@
 ﻿using CubeExample.Properties;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.Features.CustomFeature;
@@ -17,13 +18,16 @@ namespace CubeExample
     [Icon(typeof(Resources), nameof(Resources.box_icon))]
     public class BoxMacroFeatureDef : SwMacroFeatureDefinition<BoxData, BoxData>
     {
-        public override SwBody[] CreateGeometry(SwApplication app, SwDocument model, 
+        public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument model, 
             BoxData data, bool isPreview, out AlignDimensionDelegate<BoxData> alignDim)
         {
             var baseCenter = new Point(0, 0, 0);
 
-            var box = (SwBody)app.GeometryBuilder.CreateBox(baseCenter,
-                new Vector(0, 1, 0), data.Width, data.Length, data.Height);
+            var dir = new Vector(0, 1, 0);
+
+            var box = (ISwBody)(app.MemoryGeometryBuilder.CreateSolidBox(baseCenter,
+                dir, dir.CreateAnyPerpendicular(),
+                data.Width, data.Length, data.Height).Bodies.First());
 
             alignDim = (n, d) =>
             {
@@ -55,7 +59,7 @@ namespace CubeExample
                 }
             };
 
-            return new SwBody[] { box };
+            return new ISwBody[] { box };
         }
     }
 }

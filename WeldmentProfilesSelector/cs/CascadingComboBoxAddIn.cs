@@ -14,7 +14,7 @@ namespace CascadingComboBox
         }
 
         private PMPData m_Data;
-        private SwPropertyManagerPage<PMPData> m_Page;
+        private ISwPropertyManagerPage<PMPData> m_Page;
 
         public override void OnConnect()
         {

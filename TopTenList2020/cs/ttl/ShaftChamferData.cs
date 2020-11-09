@@ -16,13 +16,13 @@ namespace ttl
     [ComVisible(true)]
     public class ShaftChamferData : SwPropertyManagerPageHandler
     {
-        private SwCircularEdge m_Edge;
+        private ISwCircularEdge m_Edge;
 
         [ExcludeControl]
         [ParameterEditBody]
-        public SwBody Body { get; set; }
+        public ISwBody Body { get; set; }
 
-        public SwCircularEdge Edge
+        public ISwCircularEdge Edge
         {
             get
             {

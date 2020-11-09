@@ -20,7 +20,7 @@ namespace PMPageToggleBitmapButtons
             ShowPMPage
         }
 
-        private SwPropertyManagerPage<PMPage> m_Page;
+        private ISwPropertyManagerPage<PMPage> m_Page;
         private PMPage m_Model;
 
         public override void OnConnect()

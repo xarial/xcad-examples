@@ -12,7 +12,7 @@ namespace CascadingComboBox
     {
         public override IEnumerable<FolderItem> ProvideItems(IXApplication app, IControl[] dependencies)
         {
-            var weldmentProfilesLoc = (app as SwApplication).Sw.GetUserPreferenceStringValue(
+            var weldmentProfilesLoc = (app as ISwApplication).Sw.GetUserPreferenceStringValue(
                 (int)swUserPreferenceStringValue_e.swFileLocationsWeldmentProfiles)
                 .Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.RemoveEmptyEntries).First();
 

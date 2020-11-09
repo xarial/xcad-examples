@@ -33,19 +33,19 @@ namespace PropertyAsFileName
 
                 IXProperty titlePrp = null;
 
-                if (doc is SwDocument3D)
+                if (doc is ISwDocument3D)
                 {
-                    titlePrp = (doc as SwDocument3D).Configurations.Active.Properties.GetOrPreCreate(FILE_NAME_PRP);
+                    titlePrp = (doc as ISwDocument3D).Configurations.Active.Properties.GetOrPreCreate(FILE_NAME_PRP);
                 }
 
-                if (titlePrp == null || !titlePrp.Exists)
+                if (titlePrp == null || !titlePrp.Exists())
                 {
                     titlePrp = doc.Properties.GetOrPreCreate(FILE_NAME_PRP);
                 }
 
                 var prpVal = "";
 
-                if (titlePrp.Exists)
+                if (titlePrp.Exists())
                 {
                     prpVal = titlePrp.Value?.ToString();
                 }

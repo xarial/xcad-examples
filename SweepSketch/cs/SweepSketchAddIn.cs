@@ -27,7 +27,7 @@ namespace Xarial.XCad.Samples.SweepSketch
     public class SweepSketchData : SwPropertyManagerPageHandler
     {
         [Icon(typeof(Resources), nameof(Resources.sketch))]
-        public SwSketchBase Sketch { get; set; }
+        public ISwSketchBase Sketch { get; set; }
 
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 0.000001, 1000, 0.01, true, 0.02, 0.001)]
         [StandardControlIcon(BitmapLabelType_e.Diameter)]
@@ -39,14 +39,14 @@ namespace Xarial.XCad.Samples.SweepSketch
     [Title("Swept Sketch")]
     public class SweepSketchMacroFeatureEditor : SwMacroFeatureDefinition<SweepSketchData, SweepSketchData>
     {
-        public override SwBody[] CreateGeometry(SwApplication app, SwDocument model,
+        public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument model,
             SweepSketchData data, bool isPreview, out AlignDimensionDelegate<SweepSketchData> alignDim)
         {
             alignDim = null;
 
-            var result = new List<SwBody>();
+            var result = new List<ISwBody>();
 
-            foreach (var seg in data.Sketch.Entities.OfType<SwSketchSegment>()) 
+            foreach (var seg in data.Sketch.Entities.OfType<ISwSketchSegment>()) 
             {
                 var path = seg.Definition;
 
@@ -57,11 +57,13 @@ namespace Xarial.XCad.Samples.SweepSketch
 
                 var normalAtPoint = new Vector(evalData[3], evalData[4], evalData[5]);
 
-                var profile = app.MemoryWireGeometryBuilder.CreateCircle(startPt, normalAtPoint, data.Diameter);
+                var profile = app.MemoryGeometryBuilder.CreateCircle(startPt, normalAtPoint, data.Diameter);
 
-                var sweep = app.MemorySolidGeometryBuilder.CreateSweep(profile, path);
+                var region = app.MemoryGeometryBuilder.CreatePlanarSheet(profile).Bodies.First();
 
-                result.AddRange(sweep.Bodies.OfType<SwBody>());
+                var sweep = app.MemoryGeometryBuilder.CreateSolidSweep(path, region);
+
+                result.AddRange(sweep.Bodies.OfType<ISwBody>());
             }
 
             return result.ToArray();

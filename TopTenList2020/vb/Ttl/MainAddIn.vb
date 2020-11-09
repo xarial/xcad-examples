@@ -54,9 +54,9 @@ Namespace ttl
         End Sub
 
         Private Sub ZoomGeometryToFit()
-            Dim model = TryCast(Application.Documents.Active, SwDocument3D)
+            Dim model = TryCast(Application.Documents.Active, ISwDocument3D)
             Dim bbox = model.CalculateBoundingBox()
-            model.ActiveView.ZoomToBox(bbox)
+            model.ModelViews.Active.ZoomToBox(bbox)
         End Sub
 
         Private Sub HideShowBodies()
