@@ -6,7 +6,7 @@ This SOLIDWORKS add-in allows to create collection of swept solid bodies based o
 
 ## Installation
 
-Download the add-in [SweepSketch.zip file here](https://github.com/xarial/xcad-examples/releases/tag/0.2). Unzip the archive. Tun **register.cmd** file to install the add-in (you might need to run this as administrator). Use **unregister.cmd** to uninstall the add-in.
+Download the add-in [SweepSketch.zip file here](https://github.com/xarial/xcad-examples/releases/tag/swept-sketch-0.3). Unzip the archive. Tun **register.cmd** file to install the add-in (you might need to run this as administrator). Use **unregister.cmd** to uninstall the add-in.
 
 Add-in adds new command to menu, toolbar and command tab box called **Tools->Geometry+->Insert Sweep Sketch**
 

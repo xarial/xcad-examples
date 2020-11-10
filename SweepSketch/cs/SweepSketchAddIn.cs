@@ -69,10 +69,10 @@ namespace Xarial.XCad.Samples.SweepSketch
 
             foreach (var sketch in data.Sketches)
             {
-                foreach (var seg in sketch.Entities.OfType<ISwSketchSegment>())
+                foreach (var seg in sketch.Entities.OfType<ISwSketchSegment>().Where(s => !s.Segment.ConstructionGeometry))
                 {
                     var path = seg.Definition;
-                    
+
                     var startPt = path.StartPoint.Coordinate;
 
                     if (firstCenterPt == null)
