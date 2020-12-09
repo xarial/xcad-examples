@@ -49,12 +49,16 @@ namespace Xarial.XCad.Samples.SweepSketch
     [Title("Swept Sketch")]
     public class SweepSketchMacroFeatureEditor : SwMacroFeatureDefinition<SweepSketchData, SweepSketchData>
     {
+        private static ISwApplication m_App;
+
         private const string LENGTH_PRP_NAME = "LENGTH";
         private const string CUT_LIST_LENGTH_TRACKING_DEF_NAME = "__Xarial__SweepSketch__CutListLength__";
         
         public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument model,
             SweepSketchData data, bool isPreview, out AlignDimensionDelegate<SweepSketchData> alignDim)
         {
+            m_App = app;
+
             var cutListLengthTrackingId = app.Sw.RegisterTrackingDefinition(CUT_LIST_LENGTH_TRACKING_DEF_NAME);
 
             var result = new List<ISwBody>();
@@ -140,7 +144,7 @@ namespace Xarial.XCad.Samples.SweepSketch
         {
             var lengths = part.Tags.Pop<List<double>>(CUT_LIST_LENGTH_TRACKING_DEF_NAME);
 
-            var sw = part.App.Sw;
+            var sw = m_App.Sw;
 
             var cutListLengthTrackingId = sw.RegisterTrackingDefinition(CUT_LIST_LENGTH_TRACKING_DEF_NAME);
 
@@ -208,7 +212,7 @@ namespace Xarial.XCad.Samples.SweepSketch
             }
         }
 
-        public override void ConfigureServices(IXServiceCollection collection)
+        public override void OnConfigureServices(IXServiceCollection collection)
         {
             collection.AddOrReplace<IMemoryGeometryBuilderDocumentProvider>(
                 () => new LazyNewDocumentGeometryBuilderDocumentProvider(Application));

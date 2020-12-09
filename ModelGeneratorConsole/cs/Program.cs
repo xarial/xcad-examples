@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Xarial.XCad.Documents;
+using Xarial.XCad.Documents.Enums;
 using Xarial.XCad.Documents.Structures;
 using Xarial.XCad.Enums;
 using Xarial.XCad.SolidWorks;
@@ -17,8 +18,8 @@ namespace model_generator
             using(var app = SwApplicationFactory.Create(SwVersion_e.Sw2020, ApplicationState_e.Background))
             {
                 var doc = (ISwDocument)app.Documents.Open(
-                    Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location), @"template\model1.SLDPRT"),
-                    readOnly: true);
+                    Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location), @"template\model1.SLDPRT"), 
+                    DocumentState_e.ReadOnly);
 
                 Console.WriteLine("Enter width in meters");
                 var widthStr = Console.ReadLine();

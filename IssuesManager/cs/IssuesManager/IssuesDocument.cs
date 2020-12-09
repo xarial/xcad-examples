@@ -8,6 +8,7 @@ using Xarial.XCad.Documents.Services;
 using Xarial.XCad;
 using Xarial.XCad.Documents;
 using Xarial.XCad.Data.Enums;
+using Xarial.XCad.Documents.Enums;
 
 namespace XCad.Examples.IssuesManager
 {
@@ -111,7 +112,7 @@ namespace XCad.Examples.IssuesManager
             m_IssuesVm.Modified += OnIssuesModified;
             m_IssuesVm.LoadIssue += OnLoadIssue;
 
-            if (m_Model.Visible)
+            if (!m_Model.State.HasFlag(DocumentState_e.Hidden))
             {
                 ShowIssues?.Invoke(m_IssuesVm);
             }
