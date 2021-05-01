@@ -9,15 +9,15 @@ namespace CascadingComboBox
     [Title("Weldment Profiles")]
     public class PMPData : SwPropertyManagerPageHandler
     {
-        [CustomItems(typeof(StandardItemsProvider))]
+        [ComboBox(typeof(StandardItemsProvider))]
         [ControlTag(nameof(Standard))]
         public FolderItem Standard { get; set; }
 
-        [CustomItems(typeof(TypeItemsProvider), nameof(Standard))]
+        [ComboBox(typeof(TypeItemsProvider), nameof(Standard))]
         [ControlTag(nameof(Type))]
         public FileItem Type { get; set; }
 
-        [CustomItems(typeof(SizeItemsProvider), nameof(Type))]
+        [ComboBox(typeof(SizeItemsProvider), nameof(Type))]
         public ConfigurationItem Size { get; set; }
     }
 }
