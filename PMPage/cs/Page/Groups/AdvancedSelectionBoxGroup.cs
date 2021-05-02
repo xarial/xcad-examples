@@ -31,17 +31,33 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         }
     }
 
+    /// <summary>
+    /// This group contains some advanced ways to work with SelectionBox controls
+    /// </summary>
     public class AdvancedSelectionBoxGroup 
     {
+        /// <summary>
+        /// This SelectionBox will contain a custom icon and allow selection of
+        /// edges, faces and vertices as defined in the <see cref="SelectionBoxOptionsAttribute.Filters"/>
+        /// Secondary color will be used for the SelectionBox
+        /// </summary>
         [Icon(typeof(Resources), nameof(Resources.xarial))]
         [SelectionBoxOptions(SelectionColor = StandardSelectionColor_e.Secondary,
             Filters = new SelectType_e[] { SelectType_e.Edges, SelectType_e.Faces, SelectType_e.Vertices })]
         [Description("Standard filters and selection color")]
         public IXSelObject CustomIconSelectionBox { get; set; }
 
+        /// <summary>
+        /// Properties of type <see cref="List{IXSelObject}"/> will automatically enable the multi selections
+        /// </summary>
         [ControlOptions(height: 50)]
         public List<IXEdge> MultiSelectionBox { get; set; }
 
+        /// <summary>
+        /// <see cref="SelectionBoxOptionsAttribute"/> allows to specify the custom filter to allow specific types of entities
+        /// This SelectionBox will only allow selection of planar faces
+        /// This behavior is defined in <see cref="PlanarFaceCustomFilter.Filter(IControl, IXSelObject, SelectType_e, ref string)"/> method
+        /// </summary>
         [Description("Only selects planar face")]
         [SelectionBoxOptions(typeof(PlanarFaceCustomFilter), SelectType_e.Faces)]
         public IXFace CustomSelectionFilter { get; set; }

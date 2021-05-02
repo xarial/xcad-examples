@@ -16,7 +16,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
             public string Name { get; set; }
             public IXImage Icon { get; set; }
             public Type DataType { get; set; }
-            public UI.PropertyPage.Base.IAttribute[] Attributes { get; set; }
+            public IAttribute[] Attributes { get; set; }
 
             public object GetValue(object context)
             {
@@ -40,6 +40,13 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         [DynamicControls("DictionaryDynamicControls")]
         public Dictionary<string, object> DynamicControls { get; } = new Dictionary<string, object>();
 
+        /// <summary>
+        /// This function will be called on property page creation
+        /// and it is passed to <see cref="Extensions.IXExtension.CreatePage{TData}(UI.PropertyPage.Delegates.CreateDynamicControlsDelegate)"/>
+        /// as the parameter
+        /// </summary>
+        /// <param name="tag">Tag of dynamic control</param>
+        /// <returns>Collection of control descriptors</returns>
         public IControlDescriptor[] CreateDynamicControls(object tag)
         {
             if (tag.ToString() == "DictionaryDynamicControls")
@@ -50,7 +57,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
                     {
                         DataType = typeof(string),
                         Name = "Text1",
-                        Attributes = new UI.PropertyPage.Base.IAttribute[]
+                        Attributes = new IAttribute[]
                         {
                             new ControlOptionsAttribute(backgroundColor: KnownColor.Blue, textColor: KnownColor.White)
                         }

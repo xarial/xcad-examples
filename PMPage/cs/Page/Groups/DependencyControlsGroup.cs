@@ -27,17 +27,32 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         Hidden
     }
 
+    /// <summary>
+    /// This group contains controls which change their state based on the other control value
+    /// </summary>
     public class DependencyControlsGroup 
     {
+        /// <summary>
+        /// This CheckBox control drives the enable state of the <see cref="Text1"/> control
+        /// </summary>
         [ControlTag("Enable")]
         public bool EnableNext { get; set; }
         
+        /// <summary>
+        /// The enable state of this control is driven by the value of <see cref="EnableNext"/> CheckBox
+        /// </summary>
         [DependentOn(typeof(EnabledDependencyHandler), "Enable")]
         public string Text1 { get; set; }
 
+        /// <summary>
+        /// This ComboBox control drives the visibility state of the <see cref="Text2"/> control
+        /// </summary>
         [ControlTag("State")]
         public ControlState_e StateNext { get; set; }
 
+        /// <summary>
+        /// The enable state of this control is driven by the value of <see cref="StateNext"/> ComboBox
+        /// </summary>
         [DependentOn(typeof(StateDependencyHandler), "State")]
         public string Text2 { get; set; }
     }
