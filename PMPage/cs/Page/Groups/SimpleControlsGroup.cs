@@ -52,35 +52,15 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         public IXFace SelectionBox { get; set; }
 
         /// <summary>
-        /// <see cref="Image"/> property will be rendered as PictureBox control
+        /// This control will be rendered as picture with the default size
         /// </summary>
-        [BitmapOptions(48, 48)]
         public Image Picture { get; set; } = Resources.xarial;
-
-        /// <summary>
-        /// <see cref="Action"/> property which is decorated with <see cref="BitmapButtonAttribute"/>
-        /// will be rendered as BitmapButton where the handler of the delegate will be called on button click.
-        /// The button below will have a standard icon
-        /// </summary>
-        [BitmapButton(BitmapButtonLabelType_e.ReverseDirection)]
-        public Action PictureButton { get; set; }
-
-        /// <summary>
-        /// Thsi BitmapButton will have a custom icon
-        /// </summary>
-        [BitmapButton(typeof(Resources), nameof(Resources.xarial))]
-        public bool TogglePictureButton { get; set; }
 
         public SimpleControlsGroup() 
         {
             Button = new Action(() => 
             {
                 MessageBox.Show("Button is clicked");
-            });
-
-            PictureButton = new Action(() =>
-            {
-                MessageBox.Show("Picture Button is clicked");
             });
         }
     }

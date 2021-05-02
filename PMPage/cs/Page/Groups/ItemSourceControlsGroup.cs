@@ -33,9 +33,9 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
 
             return new string[]
             {
-                    depVal + "_A",
-                    depVal + "_B",
-                    depVal + "_C"
+                depVal + "_A",
+                depVal + "_B",
+                depVal + "_C"
             };
         }
     }
@@ -111,7 +111,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// Items source for ListBox and ComboBox can be specified as static values
         /// </summary>
         [ListBox(1, 2, 3, 4, 5)]
-        public int StaticListBox { get; set; }
+        public int StaticListBox { get; set; } = 4;
 
         public ItemSourceControlsGroup() 
         {

@@ -14,7 +14,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Tabs
     [DisplayName("Advanced Controls")]
     [Description("Second tab with custom title and icon")]
     [Icon(typeof(Resources), nameof(Resources.xarial))]
-    public class SecondTabCustomIcon 
+    public class AdvancedControlsTab 
     {
         /// <summary>
         /// This group contains controls for advanced SelectionBox

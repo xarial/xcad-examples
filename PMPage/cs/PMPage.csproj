@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Page\Groups\AdvancedSelectionBoxGroup.cs" />
+    <Compile Include="Page\Tabs\BehaviorTab.cs" />
     <Compile Include="Page\Groups\ControlsCustomizationGroup.cs" />
     <Compile Include="Controls\WinFormsUserControl.cs">
       <SubType>UserControl</SubType>
@@ -76,7 +77,8 @@
     <Compile Include="Page\Groups\CustomControlsGroup.cs" />
     <Compile Include="Page\Groups\DependencyControlsGroup.cs" />
     <Compile Include="Page\Groups\DynamicControlsGroup.cs" />
-    <Compile Include="Page\Tabs\SecondTabCustomIcon.cs" />
+    <Compile Include="Page\Groups\ReactiveControlsGroup.cs" />
+    <Compile Include="Page\Tabs\AdvancedControlsTab.cs" />
     <Compile Include="Page\Groups\ItemSourceControlsGroup.cs" />
     <Compile Include="PMPageAddIn.cs" />
     <Compile Include="Page\PMPageDataModel.cs" />
@@ -87,7 +89,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Page\Groups\SimpleControlsGroup.cs" />
-    <Compile Include="Page\Tabs\SimpleControlsTab.cs" />
+    <Compile Include="Page\Tabs\ControlsTab.cs" />
     <Compile Include="Page\Groups\ToggleGroup.cs" />
   </ItemGroup>
   <ItemGroup>

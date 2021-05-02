@@ -27,12 +27,12 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page
     public class PMPageDataModel : SwPropertyManagerPageHandler
     {
         /// <summary>
-        /// <see cref="SimpleControlsTab"/> class has is decorated with <see cref="TabAttribute"/>
+        /// <see cref="ControlsTab"/> class has is decorated with <see cref="TabAttribute"/>
         /// which will render this nested class as tab in Property Manager Page
         /// <see cref="TitleAttribute"/> allows to assign the user-friendly name for the tab
         /// </summary>
         [Title("Tab1")]
-        public SimpleControlsTab SimpleControls { get; set; }
+        public ControlsTab ControlsTab { get; set; }
 
         /// <summary>
         /// <see cref="TabAttribute"/> can also be assigned to the property
@@ -40,7 +40,12 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page
         /// can be assigned in the class
         /// </summary>
         [Tab]
-        public SecondTabCustomIcon Tab2 { get; set; }
+        public AdvancedControlsTab Tab2 { get; set; }
+
+        /// <summary>
+        /// This tab has groups which demonstrate how to customize behavior for controls
+        /// </summary>
+        public BehaviorTab Behavior { get; set; }
 
         /// <summary>
         /// By default all public properties will be considered as the sources for the controls of property manager page
@@ -50,16 +55,12 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page
         public string SystemText { get; set; }
 
         /// <summary>
-        /// All nested structures will be rendered as groups in property manager page
-        /// This group will have a toggle button as its class is decorated with <see cref="CheckableGroupBoxAttribute"/>
+        /// Collection of controls created automatically from the input property
+        /// <see cref="TitleAttribute"/> allow to define the user friendly name for the group
         /// </summary>
-        public ToggleGroup ToggleGroup { get; set; }
-
-        /// <summary>
-        /// In most cases the controls will be created based on the structure of the class (static controls)
-        /// In some cases it might be required to create controls dynamically. The followin ggroup will contain such controls
-        /// </summary>
-        public DynamicControlsGroup DynamicControlsGroup { get; set; }
+        [Title("Simple Controls")]
+        [Description("Group containing simple controls")]
+        public SimpleControlsGroup SimpleControls { get; set; }
 
         /// <summary>
         /// This property will be rendered as check box directly in the property manager page

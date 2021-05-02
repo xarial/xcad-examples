@@ -1,6 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.Windows;
 using Xarial.XCad.Base.Attributes;
+using Xarial.XCad.Examples.PMPage.CSharp.Properties;
 using Xarial.XCad.UI.PropertyPage.Attributes;
 using Xarial.XCad.UI.PropertyPage.Enums;
 
@@ -46,7 +49,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// </summary>
         [TextBoxOptions(TextBoxStyle_e.Multiline | TextBoxStyle_e.NoBorder)]
         [ControlOptions(height: 30)]
-        public string TextBoxStyle { get; set; } = "Line1" + System.Environment.NewLine + "Line2";
+        public string TextBoxStyle { get; set; } = "Line1" + Environment.NewLine + "Line2";
 
         /// <summary>
         /// <see cref="NumberBoxOptionsAttribute"/> provides additional customization options for NumberBox controls
@@ -70,5 +73,33 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         [ListBoxOptions(ListBoxStyle_e.Sorted)]
         [ListBox("C", "D", "E", "A", "B")]
         public string ListBoxStyle { get; set; }
+
+        /// <summary>
+        /// <see cref="Image"/> property will be rendered as PictureBox control
+        /// </summary>
+        [BitmapOptions(64, 64)]
+        public Image Picture { get; set; } = Resources.xarial;
+
+        /// <summary>
+        /// <see cref="Action"/> property which is decorated with <see cref="BitmapButtonAttribute"/>
+        /// will be rendered as BitmapButton where the handler of the delegate will be called on button click.
+        /// The button below will have a standard icon
+        /// </summary>
+        [BitmapButton(BitmapButtonLabelType_e.ReverseDirection)]
+        public Action PictureButton { get; set; }
+
+        /// <summary>
+        /// Thsi BitmapButton will have a custom icon
+        /// </summary>
+        [BitmapButton(typeof(Resources), nameof(Resources.xarial))]
+        public bool TogglePictureButton { get; set; }
+
+        public ControlsCustomizationGroup() 
+        {
+            PictureButton = new Action(() =>
+            {
+                MessageBox.Show("Picture Button is clicked");
+            });
+        }
     }
 }

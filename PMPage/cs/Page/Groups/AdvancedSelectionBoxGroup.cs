@@ -13,15 +13,15 @@ using Xarial.XCad.UI.PropertyPage.Services;
 
 namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
 {
-    public class PlanarFaceCustomFilter : ISelectionCustomFilter
+    public class PlanarRedFaceCustomFilter : ISelectionCustomFilter
     {
         public bool Filter(IControl selBox, IXSelObject selection, SelectType_e selType, ref string itemText)
         {
-            var face = ((ISwSelObject)selection).Dispatch as IFace2;
+            var faceColor = (selection as IXPlanarFace).Color;
 
-            if (face.IGetSurface().IsPlane())
+            if (faceColor.HasValue && faceColor.Value.R > 0 && faceColor.Value.G == 0 && faceColor.Value.B == 0)
             {
-                itemText = "Planar Face";
+                itemText = $"Red Planar Face [{faceColor.Value.R}, {faceColor.Value.G}, {faceColor.Value.B}]";
                 return true;
             }
             else
@@ -55,11 +55,11 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
 
         /// <summary>
         /// <see cref="SelectionBoxOptionsAttribute"/> allows to specify the custom filter to allow specific types of entities
-        /// This SelectionBox will only allow selection of planar faces
-        /// This behavior is defined in <see cref="PlanarFaceCustomFilter.Filter(IControl, IXSelObject, SelectType_e, ref string)"/> method
+        /// This SelectionBox will only allow selection of red planar faces
+        /// This behavior is defined in <see cref="PlanarRedFaceCustomFilter.Filter(IControl, IXSelObject, SelectType_e, ref string)"/> method
         /// </summary>
         [Description("Only selects planar face")]
-        [SelectionBoxOptions(typeof(PlanarFaceCustomFilter), SelectType_e.Faces)]
-        public IXFace CustomSelectionFilter { get; set; }
+        [SelectionBoxOptions(typeof(PlanarRedFaceCustomFilter))]
+        public IXPlanarFace CustomSelectionFilter { get; set; }
     }
 }

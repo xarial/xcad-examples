@@ -17,6 +17,7 @@ using Xarial.XCad.Examples.PMPage.CSharp.Page.Groups;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.UI.Commands.Attributes;
 using Xarial.XCad.UI.Commands.Enums;
+using Xarial.XCad.Documents;
 
 namespace Xarial.XCad.Examples.PMPage.CSharp
 {
@@ -39,15 +40,24 @@ namespace Xarial.XCad.Examples.PMPage.CSharp
         {
             m_Data = new PMPageDataModel()
             {
-                DynamicControlsGroup = new DynamicControlsGroup()
+                ControlsTab = new Page.Tabs.ControlsTab() 
+                {
+                    DynamicControlsGroup = new DynamicControlsGroup()
+                },
+                SimpleControls = new SimpleControlsGroup()
+                {
+                    TextBox = "Hello xCAD.NET",
+                    CheckBox = true,
+                    ComboBox = Options_e.Option2
+                }
             };
 
-            m_Page = this.CreatePage<PMPageDataModel>(m_Data.DynamicControlsGroup.CreateDynamicControls);
+            m_Page = this.CreatePage<PMPageDataModel>(m_Data.ControlsTab.DynamicControlsGroup.CreateDynamicControls);
             
             m_Page.Closing += OnPageClosing;
             m_Page.Closed += OnPageClosed;
             
-            this.CommandManager.AddCommandGroup<Commands_e>().CommandClick += OnCommandClick; ;
+            this.CommandManager.AddCommandGroup<Commands_e>().CommandClick += OnCommandClick;
         }
 
         private void OnPageClosing(PageCloseReasons_e reason, PageClosingArg arg)
@@ -65,11 +75,14 @@ namespace Xarial.XCad.Examples.PMPage.CSharp
 
         private void OnPageClosed(PageCloseReasons_e reason)
         {
-            var res = new StringBuilder();
+            if (reason == PageCloseReasons_e.Okay)
+            {
+                var res = new StringBuilder();
 
-            ComposeResult(m_Data, res, 0);
+                ComposeResult(m_Data, res, 0);
 
-            Application.ShowMessageBox(res.ToString());
+                Application.ShowMessageBox(res.ToString());
+            }
         }
 
         private void ComposeResult(object obj, StringBuilder res, int level)
@@ -133,6 +146,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp
             switch (spec) 
             {
                 case Commands_e.OpenPMPage:
+                    m_Data.SimpleControls.SelectionBox = (Application.Documents.Active as IXPart)?.Bodies.FirstOrDefault()?.Faces.First();
                     m_Page.Show(m_Data);
                     break;
             }
