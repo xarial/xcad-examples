@@ -77,3 +77,9 @@ Example demonstrates how to create Property Manager Page with checkable bitmap b
 Example demonstrates how to insert macro feature to create solid sweep from input sketch
 
 [C#](SweepSketch/cs)
+
+# Property Manager Page
+
+Example demonstrates main features of building Property Manager Pages with xCAD.NET
+
+[C#](PMPage/cs)
