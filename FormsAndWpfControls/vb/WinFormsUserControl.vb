@@ -7,18 +7,18 @@ Imports Xarial.XCad.UI.PropertyPage
 Public Class WinFormsUserControl
     Implements IXCustomControl
 
-    Dim m_DataContext As Object
+    Dim m_Value As Object
 
-    Public Property DataContext As Object Implements IXCustomControl.DataContext
+    Public Property Value As Object Implements IXCustomControl.Value
         Get
-            Return m_DataContext
+            Return m_Value
         End Get
         Set(value As Object)
-            m_DataContext = value
-            RaiseEvent DataContextChanged(Me, value)
+            m_Value = value
+            RaiseEvent ValueChanged(Me, value)
         End Set
     End Property
 
-    Public Event DataContextChanged As Action(Of IXCustomControl, Object) Implements IXCustomControl.DataContextChanged
+    Public Event ValueChanged As Action(Of IXCustomControl, Object) Implements IXCustomControl.ValueChanged
 
 End Class

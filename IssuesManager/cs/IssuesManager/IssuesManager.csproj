@@ -36,8 +36,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -54,14 +54,14 @@
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
-    <Reference Include="Xarial.XCad, Version=0.6.10.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XCad.0.6.10\lib\net461\Xarial.XCad.dll</HintPath>
+    <Reference Include="Xarial.XCad, Version=0.7.0.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XCad.0.7.0\lib\net461\Xarial.XCad.dll</HintPath>
     </Reference>
-    <Reference Include="Xarial.XToolkit, Version=0.2.4.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XToolkit.0.2.4\lib\net461\Xarial.XToolkit.dll</HintPath>
+    <Reference Include="Xarial.XToolkit, Version=0.2.19.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XToolkit.0.2.19\lib\net461\Xarial.XToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Xarial.XToolkit.Wpf, Version=0.2.11.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XToolkit.Wpf.0.2.11\lib\net461\Xarial.XToolkit.Wpf.dll</HintPath>
+    <Reference Include="Xarial.XToolkit.Wpf, Version=0.2.19.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XToolkit.Wpf.0.2.19\lib\net461\Xarial.XToolkit.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +99,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\issues-icon.png" />
   </ItemGroup>

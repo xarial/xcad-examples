@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Xarial.XCad.Documents
 
 <Runtime.InteropServices.ComVisible(True)>
 <DisplayName("Event Handlers Example")>
