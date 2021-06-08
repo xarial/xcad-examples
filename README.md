@@ -83,3 +83,9 @@ Example demonstrates how to insert macro feature to create solid sweep from inpu
 Example demonstrates main features of building Property Manager Pages with xCAD.NET
 
 [C#](PMPage/cs)
+
+# Properties Reader
+
+Example demonstrates how to create WPF application to load custom properties for all components of the assembly using SOLIDWORKS API and SOLIDWORKS Document manager API with the same code base
+
+[C#](PropertiesReader/cs)
