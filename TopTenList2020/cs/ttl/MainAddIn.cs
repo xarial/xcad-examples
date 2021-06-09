@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ttl.Properties;
+using Xarial.XCad.Base;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.Extensions;
 using Xarial.XCad.Features.CustomFeature;
@@ -71,9 +72,11 @@ namespace ttl
         {
             var model = Application.Documents.Active as ISwDocument3D;
 
-            var bbox = model.CalculateBoundingBox();
+            var bbox = model.PreCreateBoundingBox();
+            bbox.Precise = true;
+            bbox.Commit();
 
-            model.ModelViews.Active.ZoomToBox(bbox);
+            model.ModelViews.Active.ZoomToBox(bbox.Box);
         }
 
         private void HideShowBodies()

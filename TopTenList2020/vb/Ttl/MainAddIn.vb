@@ -7,6 +7,7 @@ Imports Xarial.XCad.SolidWorks.Documents
 Imports Xarial.XCad.UI.Commands
 Imports Xarial.XCad.UI.Commands.Attributes
 Imports Xarial.XCad.UI.Commands.Enums
+Imports Xarial.XCad.Base
 
 Namespace ttl
 
@@ -55,8 +56,10 @@ Namespace ttl
 
         Private Sub ZoomGeometryToFit()
             Dim model = TryCast(Application.Documents.Active, ISwDocument3D)
-            Dim bbox = model.CalculateBoundingBox()
-            model.ModelViews.Active.ZoomToBox(bbox)
+            Dim bbox = model.PreCreateBoundingBox()
+            bbox.Precise = True
+            bbox.Commit()
+            model.ModelViews.Active.ZoomToBox(bbox.Box)
         End Sub
 
         Private Sub HideShowBodies()
