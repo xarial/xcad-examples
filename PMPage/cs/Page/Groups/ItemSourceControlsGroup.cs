@@ -92,6 +92,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// This property will be rendered as ComboBox where items will be read from the <see cref="ItemsSource"/> property
         /// </summary>
         [ComboBox(ItemsSource = "ItemsDataSource")]
+        [ComboBoxOptions(selectDefaultValue: true)]
         public string ComboBoxItem { get; set; }
 
         /// <summary>

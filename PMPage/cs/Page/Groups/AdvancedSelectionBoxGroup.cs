@@ -58,7 +58,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// This SelectionBox will only allow selection of red planar faces
         /// This behavior is defined in <see cref="PlanarRedFaceCustomFilter.Filter(IControl, IXSelObject, SelectType_e, ref string)"/> method
         /// </summary>
-        [Description("Only selects planar face")]
+        [Description("Only selects planar red face")]
         [SelectionBoxOptions(typeof(PlanarRedFaceCustomFilter))]
         public IXPlanarFace CustomSelectionFilter { get; set; }
     }
