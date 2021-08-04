@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xarial.XCad.Annotations;
 using Xarial.XCad.Documents;
 using Xarial.XCad.SolidWorks.Documents;
 
@@ -25,75 +26,81 @@ namespace XCad.Examples.FurnitureConfigurator
         private const double DRAWER_BODY_FRONT_OFFSET = 0.037;
         private const double FRAME_HEIGHT = 0.2;
         private const double DRAWER_DEPTH_OFFSET = 0.04;
-        private const double MIN_DRAWER_HEIGHT = 0.2;
+        //private const double MIN_DRAWER_HEIGHT = 0.2;
 
         public void Configure(IXAssembly assm, double width, double height, double depth, int drawersCount, double drawerWidth, HandleType_e handleType)
         {
-            SetParameters(assm, width, height, depth, drawersCount, drawerWidth);
+            var hasChanges = SetParameters(assm, width, height, depth, drawersCount, drawerWidth);
 
-            SetHandle(assm, handleType);
+            hasChanges |= SetHandle(assm, handleType);
 
-            ((ISwAssembly)assm).Model.ForceRebuild3(false);
+            if (hasChanges)
+            {
+                assm.Regenerate();
+            }
         }
 
-        private void SetParameters(IXAssembly assm, double width, double height, double depth, int drawersCount, double drawerWidth)
+        private bool SetParameters(IXAssembly assm, double width, double height, double depth, int drawersCount, double drawerWidth)
         {
             var doorWidth = (width - drawerWidth - DOOR_GAP * 3) / 3;
             var drawerHeight = (height - FRAME_HEIGHT - DRAWER_GAP * (drawersCount - 1)) / drawersCount;
 
-            if (drawerHeight < MIN_DRAWER_HEIGHT) 
-            {
-                throw new Exception($"Minimum drawer height is {MIN_DRAWER_HEIGHT * 1000} mm");
-            }
+            //if (drawerHeight < MIN_DRAWER_HEIGHT) 
+            //{
+            //    throw new Exception($"Minimum drawer height is {MIN_DRAWER_HEIGHT * 1000} mm");
+            //}
+            var hasChanges = false;
 
             //panels width
-            assm.Configurations.Active.Components["Panel Top-1"].Dimensions["D1@Sketch1"].SetValue(width);
-            assm.Configurations.Active.Components["Panel Rear-1"].Dimensions["D1@Sketch1"].SetValue(width - PANEL_THICKNESS * 2);
-            assm.Configurations.Active.Components["Frame-1"].Dimensions["D2@3DSketch2"].SetValue(width);
-            assm.Configurations.Active.Components["Panel Base-1"].Dimensions["D1@Sketch1"].SetValue(width - PANEL_THICKNESS * 2);
-            assm.Dimensions["D1@Dist Panel LH to RH Outside"].SetValue(width);
-
+            hasChanges |= SetDimension(assm, width, "D1@Sketch1", "Panel Top-1");
+            hasChanges |= SetDimension(assm, width - PANEL_THICKNESS * 2, "D1@Sketch1", "Panel Rear-1");
+            hasChanges |= SetDimension(assm, width, "D2@3DSketch2", "Frame-1");
+            hasChanges |= SetDimension(assm, width - PANEL_THICKNESS * 2, "D1@Sketch1", "Panel Base-1");
+            hasChanges |= SetDimension(assm, width, "D1@Dist Panel LH to RH Outside");
+            
             //door width
-            assm.Configurations.Active.Components["Door-5"].Dimensions["D1@Sketch1"].SetValue(doorWidth);
+            hasChanges |= SetDimension(assm, doorWidth, "D1@Sketch1", "Door-5");
 
             //internal panels distance
-            assm.Dimensions["D1@PLANE Panel Internal 1"].SetValue(doorWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2);
-            assm.Dimensions["D1@PLANE Panel Internal 2"].SetValue(doorWidth + DOOR_GAP + drawerWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2);
-            assm.Dimensions["D1@PLANE Panel Internal 3"].SetValue(doorWidth + DOOR_GAP + drawerWidth + DOOR_GAP + doorWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2);
-
+            hasChanges |= SetDimension(assm, doorWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2, "D1@PLANE Panel Internal 1");
+            hasChanges |= SetDimension(assm, doorWidth + DOOR_GAP + drawerWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2, "D1@PLANE Panel Internal 2");
+            hasChanges |= SetDimension(assm, doorWidth + DOOR_GAP + drawerWidth + DOOR_GAP + doorWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2, "D1@PLANE Panel Internal 3");
+            
             //drawer width
-            assm.Configurations.Active.Components["Drawer-5"].Children["Drawer Front-1"].Dimensions["D1@Sketch1"].SetValue(drawerWidth);
-            assm.Configurations.Active.Components["Drawer-5"].Children["Drawer Body-1"].Dimensions["D2@Sketch1"].SetValue(drawerWidth - DRAWER_BODY_FRONT_OFFSET);
+            hasChanges |= SetDimension(assm, drawerWidth, "D1@Sketch1", "Drawer-5", "Drawer Front-1");
+            hasChanges |= SetDimension(assm, drawerWidth - DRAWER_BODY_FRONT_OFFSET, "D2@Sketch1", "Drawer-5", "Drawer Body-1");
 
             //panels height
-            assm.Dimensions["D1@PLANE Top of Cabinet"].SetValue(height);
-            assm.Configurations.Active.Components["Panel End LH-1"].Dimensions["D2@Sketch1"].SetValue(height - FRAME_HEIGHT - PANEL_THICKNESS);
-            assm.Configurations.Active.Components["Panel End RH-1"].Dimensions["D2@Sketch1"].SetValue(height - FRAME_HEIGHT - PANEL_THICKNESS);
-            assm.Configurations.Active.Components["Panel Internal-4"].Dimensions["D2@Sketch1"].SetValue(height - FRAME_HEIGHT - PANEL_THICKNESS * 2);
-            assm.Configurations.Active.Components["Panel Rear-1"].Dimensions["D2@Sketch1"].SetValue(height - FRAME_HEIGHT - PANEL_THICKNESS * 2);
+            hasChanges |= SetDimension(assm, height, "D1@PLANE Top of Cabinet");
+            hasChanges |= SetDimension(assm, height - FRAME_HEIGHT - PANEL_THICKNESS, "D2@Sketch1", "Panel End LH-1");
+            hasChanges |= SetDimension(assm, height - FRAME_HEIGHT - PANEL_THICKNESS, "D2@Sketch1", "Panel End RH-1");
+            hasChanges |= SetDimension(assm, height - FRAME_HEIGHT - PANEL_THICKNESS * 2, "D2@Sketch1", "Panel Internal-4");
+            hasChanges |= SetDimension(assm, height - FRAME_HEIGHT - PANEL_THICKNESS * 2, "D2@Sketch1", "Panel Rear-1");
 
             //door height
-            assm.Configurations.Active.Components["Door-5"].Dimensions["D2@Sketch1"].SetValue(height - FRAME_HEIGHT);
+            hasChanges |= SetDimension(assm, height - FRAME_HEIGHT, "D2@Sketch1", "Door-5");
 
             //drawer height
-            assm.Configurations.Active.Components["Drawer-5"].Children["Drawer Front-1"].Dimensions["D2@Sketch1"].SetValue(drawerHeight);
-            assm.Dimensions["D3@LocalLPattern1"].SetValue(drawerHeight + DRAWER_GAP);
-            assm.Dimensions["D1@LocalLPattern1"].SetValue(drawersCount);
-
+            hasChanges |= SetDimension(assm, drawerHeight, "D2@Sketch1", "Drawer-5", "Drawer Front-1");
+            hasChanges |= SetDimension(assm, drawerHeight + DRAWER_GAP, "D3@LocalLPattern1");
+            hasChanges |= SetDimension(assm, drawersCount, "D1@LocalLPattern1");
+            
             //panels depth
-            assm.Configurations.Active.Components["Panel End LH-1"].Dimensions["D1@Sketch1"].SetValue(depth);
-            assm.Configurations.Active.Components["Panel End RH-1"].Dimensions["D1@Sketch1"].SetValue(depth);
-            assm.Configurations.Active.Components["Panel Internal-4"].Dimensions["D1@Sketch1"].SetValue(depth - PANEL_THICKNESS);
-            assm.Dimensions["D1@PLANE Rear of Cabinet"].SetValue(depth);
-            assm.Configurations.Active.Components["Panel Top-1"].Dimensions["D2@Sketch1"].SetValue(depth);
-            assm.Configurations.Active.Components["Panel Base-1"].Dimensions["D2@Sketch1"].SetValue(depth);
-            assm.Configurations.Active.Components["Frame-1"].Dimensions["D3@3DSketch2"].SetValue(depth);
+            hasChanges |= SetDimension(assm, depth, "D1@Sketch1", "Panel End LH-1");
+            hasChanges |= SetDimension(assm, depth, "D1@Sketch1", "Panel End RH-1");
+            hasChanges |= SetDimension(assm, depth - PANEL_THICKNESS, "D1@Sketch1", "Panel Internal-4");
+            hasChanges |= SetDimension(assm, depth, "D1@PLANE Rear of Cabinet");
+            hasChanges |= SetDimension(assm, depth, "D2@Sketch1", "Panel Top-1");
+            hasChanges |= SetDimension(assm, depth, "D2@Sketch1", "Panel Base-1");
+            hasChanges |= SetDimension(assm, depth, "D3@3DSketch2", "Frame-1");
 
             //drawer depth
-            assm.Configurations.Active.Components["Drawer-5"].Children["Drawer Body-1"].Dimensions["D1@Sketch1"].SetValue(depth - DRAWER_DEPTH_OFFSET);
+            hasChanges |= SetDimension(assm, depth - DRAWER_DEPTH_OFFSET, "D1@Sketch1", "Drawer-5", "Drawer Body-1");
+
+            return hasChanges;
         }
 
-        private void SetHandle(IXAssembly assm, HandleType_e handleType) 
+        private bool SetHandle(IXAssembly assm, HandleType_e handleType) 
         {
             var assmDir = Path.GetDirectoryName(assm.Path);
 
@@ -132,6 +139,45 @@ namespace XCad.Examples.FurnitureConfigurator
                 {
                     throw new Exception("Failed to replace handle");
                 }
+
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+
+        private bool SetDimension(IXAssembly assm, double value, string dimName, params string[] compsPath) 
+        {
+            IXDimensionRepository dims;
+
+            if (!compsPath.Any())
+            {
+                dims = assm.Dimensions;
+            }
+            else 
+            {
+                var comps = assm.Configurations.Active.Components;
+                
+                foreach (var compName in compsPath.Take(compsPath.Length - 1))
+                {
+                    comps = comps[compName].Children;
+                }
+
+                dims = comps[compsPath.Last()].Dimensions;
+            }
+
+            var dim = dims[dimName];
+
+            if (Math.Abs(dim.GetValue() - value) > double.Epsilon)
+            {
+                dim.SetValue(value);
+                return true;
+            }
+            else 
+            {
+                return false;
             }
         }
     }

@@ -30,7 +30,7 @@ namespace XCad.Examples.FurnitureConfigurator
             switch (spec) 
             {
                 case Commands_e.InsertCabinetConfigurator:
-                    Application.Documents.Active.Features.CreateCustomFeature<CabinetConfiguratorMacroFeatureDefinition, CabinetSizeData, CabinetConfiguratorData>();
+                    Application.Documents.Active.Features.CreateCustomFeature<CabinetConfiguratorMacroFeatureDefinition, CabinetSizeData, CabinetConfiguratorPage>();
                     break;
             }
         }
