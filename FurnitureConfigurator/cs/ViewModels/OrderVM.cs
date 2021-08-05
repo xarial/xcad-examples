@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xarial.XToolkit.Wpf;
+using XCad.Examples.FurnitureConfigurator.Enums;
+using XCad.Examples.FurnitureConfigurator.Properties;
 
-namespace XCad.Examples.FurnitureConfigurator
+namespace XCad.Examples.FurnitureConfigurator.ViewModels
 {
     public class OrderVM
     {
         public OrderItemVM[] Items { get; }
+
+        public ICommand OrderCommand { get; }
 
         public OrderVM() 
         {
@@ -25,6 +32,19 @@ namespace XCad.Examples.FurnitureConfigurator
                 new OrderItemVM("Drawer"),
                 new OrderItemVM("Handle")
             };
+
+            OrderCommand = new RelayCommand(OnOrder);
+        }
+
+        private void OnOrder()
+        {
+            try
+            {
+                Process.Start(Settings.Default.OrderPageUrl);
+            }
+            catch 
+            {
+            }
         }
     }
 }

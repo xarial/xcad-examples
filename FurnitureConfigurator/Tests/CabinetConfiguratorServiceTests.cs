@@ -1,12 +1,16 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xarial.XCad.Documents;
 using Xarial.XCad.SolidWorks;
+using XCad.Examples.FurnitureConfigurator.DAL;
+using XCad.Examples.FurnitureConfigurator.Enums;
+using XCad.Examples.FurnitureConfigurator.Services;
 
 namespace XCad.Examples.FurnitureConfigurator.Tests
 {

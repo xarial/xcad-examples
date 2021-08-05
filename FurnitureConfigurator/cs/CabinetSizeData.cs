@@ -1,5 +1,6 @@
 ﻿using Xarial.XCad.Features.CustomFeature.Attributes;
 using Xarial.XCad.Features.CustomFeature.Enums;
+using XCad.Examples.FurnitureConfigurator.Enums;
 
 namespace XCad.Examples.FurnitureConfigurator
 {

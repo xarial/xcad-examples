@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace XCad.Examples.FurnitureConfigurator
 {
-    /// <summary>
-    /// Interaction logic for OrderControl.xaml
-    /// </summary>
     public partial class OrderControl : UserControl
     {
         public OrderControl()

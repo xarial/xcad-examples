@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using Xarial.XToolkit.Wpf.Extensions;
+using XCad.Examples.FurnitureConfigurator.Enums;
 
-namespace XCad.Examples.FurnitureConfigurator
+namespace XCad.Examples.FurnitureConfigurator.ViewModels
 {
     public class OrderItemVM : INotifyPropertyChanged
     {
@@ -15,7 +17,7 @@ namespace XCad.Examples.FurnitureConfigurator
             set 
             {
                 m_IsSelected = value;
-                NotifyChanged(nameof(IsSelected));
+                this.NotifyChanged();
             }
         }
 
@@ -27,7 +29,7 @@ namespace XCad.Examples.FurnitureConfigurator
             set
             {
                 m_Status = value;
-                NotifyChanged(nameof(Status));
+                this.NotifyChanged();
             }
         }
 
@@ -37,8 +39,5 @@ namespace XCad.Examples.FurnitureConfigurator
             IsSelected = true;
             Status = OrderItemStatus_e.Available;
         }
-
-        private void NotifyChanged(string name)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

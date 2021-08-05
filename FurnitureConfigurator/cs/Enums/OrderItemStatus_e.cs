@@ -1,4 +1,4 @@
-﻿namespace XCad.Examples.FurnitureConfigurator
+﻿namespace XCad.Examples.FurnitureConfigurator.Enums
 {
     public enum OrderItemStatus_e
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -15,7 +16,10 @@ using Xarial.XCad.SolidWorks.Documents;
 using Xarial.XCad.SolidWorks.Features.CustomFeature;
 using Xarial.XCad.SolidWorks.Features.CustomFeature.Attributes;
 using Xarial.XCad.SolidWorks.Geometry;
+using Xarial.XCad.UI.PropertyPage.Enums;
+using XCad.Examples.FurnitureConfigurator.DAL;
 using XCad.Examples.FurnitureConfigurator.Properties;
+using XCad.Examples.FurnitureConfigurator.Services;
 using static XCad.Examples.FurnitureConfigurator.CabinetConfiguratorPage;
 
 namespace XCad.Examples.FurnitureConfigurator
@@ -84,5 +88,25 @@ namespace XCad.Examples.FurnitureConfigurator
                     DrawerHandleType = par.DrawerHandleType
                 }
             };
+
+        public override void OnEditingStarted(IXApplication app, IXDocument doc, IXCustomFeature<CabinetSizeData> feat,
+            CabinetSizeData data, CabinetConfiguratorPage page)
+        {
+            page.Order.Db = new FurnitureDbContext(Settings.Default.DbConnectionString);
+            page.Order.UpdateStatuses();
+        }
+
+        public override void OnEditingCompleted(IXApplication app, IXDocument doc, IXCustomFeature<CabinetSizeData> feat,
+            CabinetSizeData data, CabinetConfiguratorPage page, PageCloseReasons_e reason)
+        {
+            page.Order.Db.Dispose();
+        }
+
+        public override void OnPageParametersChanged(IXApplication app, IXDocument doc, IXCustomFeature<CabinetSizeData> feat,
+            CabinetConfiguratorPage page)
+        {
+            m_Svc.Calculate(page.Size.Width, page.Size.Height, page.Size.Depth, page.Size.NumberOfDrawers, page.Size.DrawerWidth);
+            page.Order.UpdateStatuses();
+        }
     }
 }

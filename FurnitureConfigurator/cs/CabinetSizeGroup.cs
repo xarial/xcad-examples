@@ -2,6 +2,7 @@
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.UI.PropertyPage.Attributes;
 using Xarial.XCad.UI.PropertyPage.Enums;
+using XCad.Examples.FurnitureConfigurator.Enums;
 using XCad.Examples.FurnitureConfigurator.Properties;
 
 namespace XCad.Examples.FurnitureConfigurator

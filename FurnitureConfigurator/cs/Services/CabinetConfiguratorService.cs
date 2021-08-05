@@ -8,16 +8,10 @@ using System.Threading.Tasks;
 using Xarial.XCad.Annotations;
 using Xarial.XCad.Documents;
 using Xarial.XCad.SolidWorks.Documents;
+using XCad.Examples.FurnitureConfigurator.Enums;
 
-namespace XCad.Examples.FurnitureConfigurator
+namespace XCad.Examples.FurnitureConfigurator.Services
 {
-    public enum HandleType_e 
-    {
-        C,
-        D,
-        W
-    }
-
     public class CabinetConfiguratorService
     {
         private const double PANEL_THICKNESS = 0.018;
@@ -26,7 +20,6 @@ namespace XCad.Examples.FurnitureConfigurator
         private const double DRAWER_BODY_FRONT_OFFSET = 0.037;
         private const double FRAME_HEIGHT = 0.2;
         private const double DRAWER_DEPTH_OFFSET = 0.04;
-        //private const double MIN_DRAWER_HEIGHT = 0.2;
 
         public void Configure(IXAssembly assm, double width, double height, double depth, int drawersCount, double drawerWidth, HandleType_e handleType)
         {
@@ -40,15 +33,15 @@ namespace XCad.Examples.FurnitureConfigurator
             }
         }
 
+        public void Calculate(double width, double height, double depth, int drawersCount, double drawerWidth)
+        {
+        }
+
         private bool SetParameters(IXAssembly assm, double width, double height, double depth, int drawersCount, double drawerWidth)
         {
             var doorWidth = (width - drawerWidth - DOOR_GAP * 3) / 3;
             var drawerHeight = (height - FRAME_HEIGHT - DRAWER_GAP * (drawersCount - 1)) / drawersCount;
 
-            //if (drawerHeight < MIN_DRAWER_HEIGHT) 
-            //{
-            //    throw new Exception($"Minimum drawer height is {MIN_DRAWER_HEIGHT * 1000} mm");
-            //}
             var hasChanges = false;
 
             //panels width

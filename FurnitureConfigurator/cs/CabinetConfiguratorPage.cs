@@ -2,7 +2,9 @@
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.SolidWorks.UI.PropertyPage;
 using Xarial.XCad.UI.PropertyPage.Attributes;
+using XCad.Examples.FurnitureConfigurator.DAL;
 using XCad.Examples.FurnitureConfigurator.Properties;
+using XCad.Examples.FurnitureConfigurator.ViewModels;
 
 namespace XCad.Examples.FurnitureConfigurator
 {
@@ -20,6 +22,13 @@ namespace XCad.Examples.FurnitureConfigurator
             public OrderGroup() 
             {
                 Grid = new OrderVM();
+            }
+
+            [ExcludeControl]
+            public FurnitureDbContext Db { get; set; }
+
+            public void UpdateStatuses() 
+            {
             }
         }
 
