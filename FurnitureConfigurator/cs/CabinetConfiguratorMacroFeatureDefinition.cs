@@ -93,7 +93,7 @@ namespace XCad.Examples.FurnitureConfigurator
             CabinetSizeData data, CabinetConfiguratorPage page)
         {
             page.Order.Db = new FurnitureDbContext(Settings.Default.DbConnectionString);
-            page.Order.UpdateStatuses();
+            UpdateStatuses(page);
         }
 
         public override void OnEditingCompleted(IXApplication app, IXDocument doc, IXCustomFeature<CabinetSizeData> feat,
@@ -105,8 +105,13 @@ namespace XCad.Examples.FurnitureConfigurator
         public override void OnPageParametersChanged(IXApplication app, IXDocument doc, IXCustomFeature<CabinetSizeData> feat,
             CabinetConfiguratorPage page)
         {
-            m_Svc.Calculate(page.Size.Width, page.Size.Height, page.Size.Depth, page.Size.NumberOfDrawers, page.Size.DrawerWidth);
-            page.Order.UpdateStatuses();
+            UpdateStatuses(page);
+        }
+
+        private void UpdateStatuses(CabinetConfiguratorPage page)
+        {
+            var cabinet = m_Svc.Calculate(page.Size.Width, page.Size.Height, page.Size.Depth, page.Size.NumberOfDrawers, page.Size.DrawerWidth);
+            page.Order.UpdateStatuses(cabinet);
         }
     }
 }

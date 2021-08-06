@@ -13,6 +13,20 @@ namespace XCad.Examples.FurnitureConfigurator.ViewModels
 {
     public class OrderVM
     {
+        public enum ItemType_e 
+        {
+            Frame,
+            PanelBase,
+            PanelEndLH,
+            PanelEndRH,
+            PanelTop,
+            PanelRear,
+            PanelInternal,
+            Door,
+            Drawer,
+            Handle
+        }
+
         public OrderItemVM[] Items { get; }
 
         public ICommand OrderCommand { get; }

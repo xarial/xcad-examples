@@ -5,8 +5,8 @@ GO
 CREATE TABLE [Doors](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Type] [int] NOT NULL,
-	[Width] [nchar](10) NOT NULL,
-	[Height] [nchar](10) NOT NULL,
+	[Width] [float] NOT NULL,
+	[Height] [float] NOT NULL,
 	[InStock] [bit] NOT NULL,
  CONSTRAINT [PK_Doors] PRIMARY KEY CLUSTERED 
 (
@@ -80,9 +80,9 @@ CREATE TABLE [Panels](
 GO
 SET IDENTITY_INSERT [Doors] ON 
 GO
-INSERT [Doors] ([Id], [Type], [Width], [Height], [InStock]) VALUES (1, 0, N'419       ', N'700       ', 1)
+INSERT [Doors] ([Id], [Type], [Width], [Height], [InStock]) VALUES (1, 0, 419, 700, 1)
 GO
-INSERT [Doors] ([Id], [Type], [Width], [Height], [InStock]) VALUES (2, 0, N'419       ', N'600       ', 1)
+INSERT [Doors] ([Id], [Type], [Width], [Height], [InStock]) VALUES (2, 0, 419, 600, 1)
 GO
 SET IDENTITY_INSERT [Doors] OFF
 GO

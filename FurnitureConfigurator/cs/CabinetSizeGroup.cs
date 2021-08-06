@@ -12,12 +12,12 @@ namespace XCad.Examples.FurnitureConfigurator
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 1.5, 2.4, 0.1, true, 0.2, 0.1)]
         [Description("Cabinet Width")]
         [Icon(typeof(Resources), nameof(Resources.width))]
-        public double Width { get; set; } = 1.8;
+        public double Width { get; set; } = 2.0;
 
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 0.6, 1.2, 0.1, true, 0.2, 0.1)]
         [Description("Cabinet Height")]
         [Icon(typeof(Resources), nameof(Resources.height))]
-        public double Height { get; set; } = 0.9;
+        public double Height { get; set; } = 1.0;
 
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 0.3, 0.6, 0.1, true, 0.2, 0.1)]
         [Description("Cabinet Depth")]
@@ -32,7 +32,7 @@ namespace XCad.Examples.FurnitureConfigurator
         [NumberBoxOptions(NumberBoxUnitType_e.Length, 0.3, 0.6, 0.1, true, 0.2, 0.1)]
         [Icon(typeof(Resources), nameof(Resources.drawer_width))]
         [Description("Drawer Width")]
-        public double DrawerWidth { get; set; } = 0.5;
+        public double DrawerWidth { get; set; } = 0.537;
 
         [Icon(typeof(Resources), nameof(Resources.door_handle))]
         [Description("Drawer Handle Type")]

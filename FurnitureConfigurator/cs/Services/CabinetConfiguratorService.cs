@@ -12,6 +12,12 @@ using XCad.Examples.FurnitureConfigurator.Enums;
 
 namespace XCad.Examples.FurnitureConfigurator.Services
 {
+    public class Cabinet 
+    {
+        public double DoorWidth { get; set; }
+        public double DoorHeight { get; set; }
+    }
+
     public class CabinetConfiguratorService
     {
         private const double PANEL_THICKNESS = 0.018;
@@ -33,12 +39,21 @@ namespace XCad.Examples.FurnitureConfigurator.Services
             }
         }
 
-        public void Calculate(double width, double height, double depth, int drawersCount, double drawerWidth)
+        public Cabinet Calculate(double width, double height, double depth, int drawersCount, double drawerWidth)
         {
+            var doorWidth = (width - drawerWidth - DOOR_GAP * 3) / 3;
+
+            return new Cabinet()
+            {
+                DoorWidth = Math.Round(doorWidth * 1000, 2),
+                DoorHeight = Math.Round(height * 1000 - FRAME_HEIGHT * 1000, 2)
+            };
         }
 
         private bool SetParameters(IXAssembly assm, double width, double height, double depth, int drawersCount, double drawerWidth)
         {
+            var cabinet = Calculate(width, height, depth, drawersCount, drawerWidth);
+
             var doorWidth = (width - drawerWidth - DOOR_GAP * 3) / 3;
             var drawerHeight = (height - FRAME_HEIGHT - DRAWER_GAP * (drawersCount - 1)) / drawersCount;
 
@@ -52,7 +67,7 @@ namespace XCad.Examples.FurnitureConfigurator.Services
             hasChanges |= SetDimension(assm, width, "D1@Dist Panel LH to RH Outside");
             
             //door width
-            hasChanges |= SetDimension(assm, doorWidth, "D1@Sketch1", "Door-5");
+            hasChanges |= SetDimension(assm, cabinet.DoorWidth * 0.001, "D1@Sketch1", "Door-5");
 
             //internal panels distance
             hasChanges |= SetDimension(assm, doorWidth + DOOR_GAP / 2 - PANEL_THICKNESS / 2, "D1@PLANE Panel Internal 1");
@@ -71,7 +86,7 @@ namespace XCad.Examples.FurnitureConfigurator.Services
             hasChanges |= SetDimension(assm, height - FRAME_HEIGHT - PANEL_THICKNESS * 2, "D2@Sketch1", "Panel Rear-1");
 
             //door height
-            hasChanges |= SetDimension(assm, height - FRAME_HEIGHT, "D2@Sketch1", "Door-5");
+            hasChanges |= SetDimension(assm, cabinet.DoorHeight * 0.001, "D2@Sketch1", "Door-5");
 
             //drawer height
             hasChanges |= SetDimension(assm, drawerHeight, "D2@Sketch1", "Drawer-5", "Drawer Front-1");
