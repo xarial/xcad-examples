@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Sw Task Pane Example" Language="1033" Version="1.0.0.0" Manufacturer="Xarial" UpgradeCode="{BC085A11-EF78-4512-A4B9-CC88703BAA53}">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of Sw Task Pane Example is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<UIRef Id="WixUI_InstallDir" />
+		<UIRef Id="WixUI_Common" />
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
+		<Feature Id="ProductFeature" Title="Setup" Level="1">
+      <ComponentGroupRef Id="FilesRegGroup" />
+			<ComponentGroupRef Id="AddInComRegGroup" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFiles64Folder">
+				<Directory Id="XarialDirId" Name="Xarial">
+					<Directory Id="INSTALLFOLDER" Name="SwTaskPaneExample (WiX)" />
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+</Wix>

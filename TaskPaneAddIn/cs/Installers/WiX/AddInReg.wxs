@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AddInComRegGroup">
+            <Component Id="cmp3B02EBFB57DD287AF19415159FCC9C4F" Directory="INSTALLFOLDER" Guid="*">
+                <Class Id="{8EF3F3AB-7C22-323B-AC66-423686F37ABF}" Context="InprocServer32" Description="Xarial.XCad.Examples.SwTaskPaneAddIn.MainAddIn" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="Xarial.XCad.Examples.SwTaskPaneAddIn.MainAddIn" Description="Xarial.XCad.Examples.SwTaskPaneAddIn.MainAddIn" />
+                </Class>
+                <File Id="fil03057C67C1BED4105A77A041FFACB697" KeyPath="yes" Source="$(var.SourceOutDir)\SwTaskPaneAddIn.dll" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32\1.0.0.0" Name="Class" Value="Xarial.XCad.Examples.SwTaskPaneAddIn.MainAddIn" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32\1.0.0.0" Name="Assembly" Value="SwTaskPaneAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32\1.0.0.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32\1.0.0.0" Name="CodeBase" Value="file:///[#fil03057C67C1BED4105A77A041FFACB697]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32" Name="Class" Value="Xarial.XCad.Examples.SwTaskPaneAddIn.MainAddIn" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32" Name="Assembly" Value="SwTaskPaneAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{8EF3F3AB-7C22-323B-AC66-423686F37ABF}\InprocServer32" Name="CodeBase" Value="file:///[#fil03057C67C1BED4105A77A041FFACB697]" Type="string" Action="write" />
+                <RegistryValue Root="HKCU" Key="Software\SolidWorks\AddInsStartup\{8ef3f3ab-7c22-323b-ac66-423686f37abf}" Value="1" Type="integer" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\SolidWorks\Addins\{8ef3f3ab-7c22-323b-ac66-423686f37abf}" Value="0" Type="integer" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\SolidWorks\Addins\{8ef3f3ab-7c22-323b-ac66-423686f37abf}" Name="Description" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\SolidWorks\Addins\{8ef3f3ab-7c22-323b-ac66-423686f37abf}" Name="Title" Value="SOLIDWORKS Task Pane Add-In Example" Type="string" Action="write" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
