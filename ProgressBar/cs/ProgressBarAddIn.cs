@@ -14,7 +14,7 @@ using Xarial.XCad.Examples.ProgressBar.Properties;
 
 namespace Xarial.XCad.Examples.ProgressBar
 {
-    [Title("Progress bar Example")]
+    [Title("Progress Bar Example")]
     public enum Commands_e 
     {
         [Title("Show Progress Page")]

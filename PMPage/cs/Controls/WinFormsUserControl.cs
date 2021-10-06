@@ -13,7 +13,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Controls
 {
     public partial class WinFormsUserControl : UserControl, IXCustomControl
     {
-        public event Action<IXCustomControl, object> ValueChanged;
+        public event CustomControlValueChangedDelegate ValueChanged;
 
         public WinFormsUserControl()
         {
