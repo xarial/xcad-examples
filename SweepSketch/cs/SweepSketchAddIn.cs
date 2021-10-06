@@ -97,7 +97,9 @@ namespace Xarial.XCad.Samples.SweepSketch
 
                     var profile = app.MemoryGeometryBuilder.CreateCircle(startPt, normalAtPoint, data.Radius * 2);
 
-                    var region = app.MemoryGeometryBuilder.CreatePlanarSheet(profile).Bodies.First();
+                    var profileRegion = app.MemoryGeometryBuilder.CreateRegionFromSegments(profile);
+
+                    var region = app.MemoryGeometryBuilder.CreatePlanarSheet(profileRegion).Bodies.First();
 
                     var sweep = app.MemoryGeometryBuilder.CreateSolidSweep(path, region);
 

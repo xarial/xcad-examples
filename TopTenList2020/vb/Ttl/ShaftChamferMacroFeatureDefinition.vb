@@ -35,7 +35,7 @@ Namespace ttl
             Dim targBody = data.Body
 
             If isPreview Then
-                targBody = targBody.ToTempBody()
+                targBody = targBody.Copy()
             End If
 
             Dim result = targBody.Substract(cylBody.Substract(coneBody).First()).First()

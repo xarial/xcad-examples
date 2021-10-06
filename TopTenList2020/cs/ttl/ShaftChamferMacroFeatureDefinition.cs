@@ -42,7 +42,7 @@ namespace ttl
 
             if (isPreview)
             {
-                targBody = targBody.ToTempBody();
+                targBody = (ISwBody)targBody.Copy();
             }
 
             var result = targBody.Substract(cylBody.Substract(coneBody).First()).First();

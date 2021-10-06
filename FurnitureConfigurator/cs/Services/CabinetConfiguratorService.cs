@@ -35,7 +35,7 @@ namespace XCad.Examples.FurnitureConfigurator.Services
 
             if (hasChanges)
             {
-                assm.Regenerate();
+                assm.Rebuild();
             }
         }
 

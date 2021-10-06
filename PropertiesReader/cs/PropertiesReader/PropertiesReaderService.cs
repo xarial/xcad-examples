@@ -40,7 +40,7 @@ namespace PropertiesReader
                         return "";
                     }
                 }).Where(x => !string.IsNullOrEmpty(x.Key))
-                .Select(x => x.First().Document)
+                .Select(x => x.First().ReferencedDocument)
                 .Where(x => x.IsCommitted).ToArray();
 
             foreach (var refDoc in refDocs) 

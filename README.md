@@ -98,6 +98,12 @@ Example demonstrates how to attach feature manager tabs to all created documents
 
 # Task Pane AddIn and MSI-Installers
 
-Example demonstrates how to hsot WPF control in Task Pane and how to create MSI-installers for SOLIDWORKS add-in
+Example demonstrates how to host WPF control in Task Pane and how to create MSI-installers for SOLIDWORKS add-in
 
 [C#](TaskPaneAddIn/cs)
+
+# Dimension Watcher Macro Feature
+
+Example demonstrates how to create macro feature without geometry with custom error messages
+
+[C#](DimensionWatcher/cs)
