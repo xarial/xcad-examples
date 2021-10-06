@@ -19,8 +19,9 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         public string TextBox { get; set; }
 
         /// <summary>
-        /// <see cref="int"/> property will be rendered as NumberBox control
+        /// <see cref="int"/> property will be rendered as NumberBox control with label
         /// </summary>
+        [Label("Number Box Control with label")]
         public int NumberBox { get; set; }
 
         /// <summary>
@@ -50,6 +51,13 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// Properties assignable to <see cref="IXSelObject"/> will be rendered as SelectionBox control
         /// </summary>
         public IXFace SelectionBox { get; set; }
+
+        /// <summary>
+        /// Text block property
+        /// </summary>
+        [TextBlock]
+        [TextBlockOptions(TextAlignment_e.Center)]
+        public string TextBlock => "Sample Text Block";
 
         /// <summary>
         /// This control will be rendered as picture with the default size

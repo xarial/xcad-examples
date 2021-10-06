@@ -19,6 +19,6 @@ Public Class WinFormsUserControl
         End Set
     End Property
 
-    Public Event ValueChanged As Action(Of IXCustomControl, Object) Implements IXCustomControl.ValueChanged
+    Public Event ValueChanged As CustomControlValueChangedDelegate Implements IXCustomControl.ValueChanged
 
 End Class

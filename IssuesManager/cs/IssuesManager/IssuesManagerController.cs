@@ -38,14 +38,14 @@ namespace XCad.Examples.IssuesManager
             m_Ext = ext;
 
             m_Ext.Application.Documents.RegisterHandler<IssuesDocument>();
-            m_Ext.Application.Documents.DocumentCreated += OnDocumentCreated;
+            m_Ext.Application.Documents.DocumentLoaded += OnDocumentLoaded;
 
             m_TaskPane = m_Ext.CreateTaskPane<IssuesControl, IssuesMgrCommands_e>();
             m_IssuesControl = m_TaskPane.Control;
             m_TaskPane.ButtonClick += OnTaskPaneButtonClick;
         }
 
-        private void OnDocumentCreated(IXDocument doc)
+        private void OnDocumentLoaded(IXDocument doc)
         {
             var issuesDoc = m_Ext.Application.Documents.GetHandler<IssuesDocument>(doc);
             issuesDoc.Destroyed += OnIssuesDocDestroyed;
@@ -95,7 +95,7 @@ namespace XCad.Examples.IssuesManager
 
         public void Dispose()
         {
-            m_Ext.Application.Documents.DocumentCreated -= OnDocumentCreated;
+            m_Ext.Application.Documents.DocumentLoaded -= OnDocumentLoaded;
             m_TaskPane.ButtonClick -= OnTaskPaneButtonClick;
         }
     }

@@ -89,3 +89,21 @@ Example demonstrates main features of building Property Manager Pages with xCAD.
 Example demonstrates how to create WPF application to load custom properties for all components of the assembly using SOLIDWORKS API and SOLIDWORKS Document manager API with the same code base
 
 [C#](PropertiesReader/cs)
+
+# Document Feature Manager Tabs
+
+Example demonstrates how to attach feature manager tabs to all created documents
+
+[C#](DocumentFeatureTabs/cs)
+
+# Task Pane AddIn and MSI-Installers
+
+Example demonstrates how to host WPF control in Task Pane and how to create MSI-installers for SOLIDWORKS add-in
+
+[C#](TaskPaneAddIn/cs)
+
+# Dimension Watcher Macro Feature
+
+Example demonstrates how to create macro feature without geometry with custom error messages
+
+[C#](DimensionWatcher/cs)

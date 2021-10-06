@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.7.1" />
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.7.5" />
   </ItemGroup>
 
   <ItemGroup>

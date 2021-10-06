@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="cmpBC4FC00A26E7D32479D42D3411317FC5" Guid="*">
+                <File Id="fil90A8AAD9FC612906D405476D61CEA3F4" KeyPath="yes" Source="$(var.SourceOutDir)\Newtonsoft.Json.dll" />
+            </Component>
+            <Component Id="cmp54E9FBB2FCA1126157C6D3BBDF129E95" Guid="*">
+                <File Id="fil1DCA2E4809DC55443FA77B254C50E4D9" KeyPath="yes" Source="$(var.SourceOutDir)\SolidWorks.Interop.sldworks.dll" />
+            </Component>
+            <Component Id="cmp6FFEB3A81DA04A83F48DCDFBF5E1A4D3" Guid="*">
+                <File Id="filE728C519C6E2BD1438A14782A37CAD1F" KeyPath="yes" Source="$(var.SourceOutDir)\SolidWorks.Interop.swconst.dll" />
+            </Component>
+            <Component Id="cmp1B8A050B9300A7AE31C2555BA867DB6B" Guid="*">
+                <File Id="filE827DB20F755B6D29AE6D2ABF2BAEFFC" KeyPath="yes" Source="$(var.SourceOutDir)\SolidWorks.Interop.swpublished.dll" />
+            </Component>
+            <Component Id="cmp274BC1681DEB87B9EC1B8FC5B6AC5493" Guid="*">
+                <File Id="fil5D6E5AE9D51D90F5C5C5FD23F8E94B92" KeyPath="yes" Source="$(var.SourceOutDir)\Xarial.XCad.dll" />
+            </Component>
+            <Component Id="cmpA81BA02A0C8BBA602E8A48EC58FBDE09" Guid="*">
+                <File Id="fil10130063A2AAC50D6BAFCC9475C7A39F" KeyPath="yes" Source="$(var.SourceOutDir)\Xarial.XCad.SolidWorks.dll" />
+            </Component>
+            <Component Id="cmp6F87047D8D0973B6C05CA13AC9DDD67A" Guid="*">
+                <File Id="fil1F2E0E4CA15D99DB9A14CB2FF39F6EF4" KeyPath="yes" Source="$(var.SourceOutDir)\Xarial.XCad.Toolkit.dll" />
+            </Component>
+            <Component Id="cmpA57D036B0C39DD5A02A85B352D4A6900" Guid="*">
+                <File Id="filFC811B709AABD9C110083288A21D0614" KeyPath="yes" Source="$(var.SourceOutDir)\Xarial.XToolkit.dll" />
+            </Component>
+            <Component Id="cmp5978C9160A39C99DB8040C5EA45C4891" Guid="*">
+                <File Id="fil0924E1854D958D5CFDC77F89692FEF7A" KeyPath="yes" Source="$(var.SourceOutDir)\Xarial.XToolkit.Wpf.dll" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="FilesRegGroup">
+            <ComponentRef Id="cmpBC4FC00A26E7D32479D42D3411317FC5" />
+            <ComponentRef Id="cmp54E9FBB2FCA1126157C6D3BBDF129E95" />
+            <ComponentRef Id="cmp6FFEB3A81DA04A83F48DCDFBF5E1A4D3" />
+            <ComponentRef Id="cmp1B8A050B9300A7AE31C2555BA867DB6B" />
+            <ComponentRef Id="cmp274BC1681DEB87B9EC1B8FC5B6AC5493" />
+            <ComponentRef Id="cmpA81BA02A0C8BBA602E8A48EC58FBDE09" />
+            <ComponentRef Id="cmp6F87047D8D0973B6C05CA13AC9DDD67A" />
+            <ComponentRef Id="cmpA57D036B0C39DD5A02A85B352D4A6900" />
+            <ComponentRef Id="cmp5978C9160A39C99DB8040C5EA45C4891" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

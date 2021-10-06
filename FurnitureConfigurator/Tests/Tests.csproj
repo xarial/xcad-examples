@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <RootNamespace>XCad.Examples.FurnitureConfigurator.Tests</RootNamespace>
+
+    <AssemblyName>FurnitureConfigurator.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Xarial.XCad" Version="0.7.5" />
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\cs\FurnitureConfigurator.csproj" />
+  </ItemGroup>
+
+</Project>
