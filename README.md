@@ -60,6 +60,8 @@ Example demonstrates how different size icons rendered in the menus and toolbars
 
 [VB.NET](CommandGroupIcons/vb)
 
+[C#](CommandGroupIcons/cs)
+
 # Weldment Profiles Selector
 
 Example demonstrates how to create dynamic cascading combo boxes in the Property Manager Page which select weldment profiles (standard, type and size)
