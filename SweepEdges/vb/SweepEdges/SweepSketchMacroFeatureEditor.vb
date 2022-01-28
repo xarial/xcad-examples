@@ -1,4 +1,5 @@
 ﻿
+Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports Xarial.XCad.Base.Attributes
 Imports Xarial.XCad.Features.CustomFeature
@@ -18,8 +19,10 @@ Public Class SweepSketchMacroFeatureEditor
     Public Overrides Function CreateGeometry(ByVal app As ISwApplication, ByVal model As ISwDocument, ByVal data As SweepSketchData, ByVal isPreview As Boolean, <Out> ByRef alignDim As AlignDimensionDelegate(Of SweepSketchData)) As ISwBody()
 
         Dim result = New List(Of ISwBody)()
-        Dim firstCenterPt As Point = Nothing
+        Dim firstCenterPt As Structures.Point = Nothing
         Dim firstDir As Vector = Nothing
+
+        'TODO: implement merge
 
         For Each edge In data.Edges
 
@@ -54,5 +57,13 @@ Public Class SweepSketchMacroFeatureEditor
 
         Return result.ToArray()
     End Function
+
+    Public Overrides Function OnShouldHidePreviewEditBody(body As IXBody, data As SweepSketchData, page As SweepSketchData) As Boolean
+        Return Not data.Merge
+    End Function
+
+    Public Overrides Sub AssignPreviewBodyColor(body As IXBody, ByRef color As Color)
+        color = Color.FromArgb(100, Color.Blue)
+    End Sub
 
 End Class
