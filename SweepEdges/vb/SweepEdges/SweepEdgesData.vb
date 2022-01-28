@@ -9,7 +9,7 @@ Imports Xarial.XCad.UI.PropertyPage.Enums
 
 <ComVisible(True)>
 <Title("Swept Edges")>
-Public Class SweepSketchData
+Public Class SweepEdgesData
     Inherits SwPropertyManagerPageHandler
 
     Dim m_Edges As List(Of ISwLinearEdge)
@@ -31,6 +31,7 @@ Public Class SweepSketchData
     <ParameterDimension(CustomFeatureDimensionType_e.Radial)>
     Public Property Radius As Double = 0.005
 
+    <ControlOptions(, ControlLeftAlign_e.Indent)>
     Public Property Merge As Boolean
         Get
             Return m_Merge
