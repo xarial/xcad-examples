@@ -109,3 +109,9 @@ Example demonstrates how to host WPF control in Task Pane and how to create MSI-
 Example demonstrates how to create macro feature without geometry with custom error messages
 
 [C#](DimensionWatcher/cs)
+
+# .NET 6 SOLIDWORKS Add-In With Public API
+
+This example demonstrates how to create SOLIDWORKS add-in using C# .NET 6 and expose a public API
+
+[C#](AddInApiNet6/cs)
