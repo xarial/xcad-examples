@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.Base.Enums;
+using Xarial.XCad.Enums;
 using Xarial.XCad.Examples.PMPage.CSharp.Properties;
 using Xarial.XCad.Geometry;
 using Xarial.XCad.SolidWorks;

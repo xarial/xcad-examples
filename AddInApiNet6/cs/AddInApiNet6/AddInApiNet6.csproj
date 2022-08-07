@@ -8,7 +8,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <RootNamespace>Xarial.XCad.Examples</RootNamespace>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0-20220630.1" />
   </ItemGroup>
