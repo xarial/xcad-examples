@@ -20,7 +20,10 @@ Namespace ttl
 
         Public Overrides Function CreateGeometry(ByVal app As ISwApplication, ByVal model As ISwDocument, ByVal data As ShaftChamferData, ByVal isPreview As Boolean, <Out> ByRef alignDim As AlignDimensionDelegate(Of ShaftChamferData)) As ISwBody()
 
-            Dim dir = data.Edge.AdjacentEntities.OfType(Of ISwPlanarFace)().First().Definition.Plane.Normal * -1
+            Dim planarFace = data.Edge.AdjacentEntities.OfType(Of ISwPlanarFace)().First()
+            Dim sense As Boolean = planarFace.Face.FaceInSurfaceSense()
+
+            Dim dir = planarFace.Definition.Plane.Normal * IIf(sense, 1, -1)
             Dim centerPt = data.Edge.Definition.Center
             Dim largeRad = data.Edge.Definition.Diameter / 2
 

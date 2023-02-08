@@ -4,29 +4,32 @@ using System.ComponentModel;
 using System.Drawing;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.Base.Enums;
+using Xarial.XCad.Enums;
 using Xarial.XCad.Examples.PMPage.CSharp.Properties;
 using Xarial.XCad.Geometry;
 using Xarial.XCad.SolidWorks;
 using Xarial.XCad.UI.PropertyPage.Attributes;
 using Xarial.XCad.UI.PropertyPage.Base;
 using Xarial.XCad.UI.PropertyPage.Services;
+using Xarial.XCad.UI.PropertyPage.Structures;
 
 namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
 {
     public class PlanarRedFaceCustomFilter : ISelectionCustomFilter
     {
-        public bool Filter(IControl selBox, IXSelObject selection, SelectType_e selType, ref string itemText)
+        public void Filter(IControl selBox, IXSelObject selection, SelectionCustomFilterArguments args)
         {
             var faceColor = (selection as IXPlanarFace).Color;
 
             if (faceColor.HasValue && faceColor.Value.R > 0 && faceColor.Value.G == 0 && faceColor.Value.B == 0)
             {
-                itemText = $"Red Planar Face [{faceColor.Value.R}, {faceColor.Value.G}, {faceColor.Value.B}]";
-                return true;
+                args.ItemText = $"Red Planar Face [{faceColor.Value.R}, {faceColor.Value.G}, {faceColor.Value.B}]";
+                args.Filter = true;
             }
             else
             {
-                return false;
+                args.Reason = "Only red planar faces can be selected";
+                args.Filter = false;
             }
         }
     }

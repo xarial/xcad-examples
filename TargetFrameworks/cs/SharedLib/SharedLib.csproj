@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <RootNamespace>Xarial.XCad.Samples.SharedLib</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <OutDir>bin\$(Configuration)\$(VersionPrefix)</OutDir>
+  </PropertyGroup>
+
+</Project>

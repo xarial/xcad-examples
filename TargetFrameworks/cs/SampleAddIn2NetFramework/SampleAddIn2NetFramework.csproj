@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <RootNamespace>Xarial.XCad.Samples.SampleAddIn2</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0-preview.4297" />
+  </ItemGroup>
+
+</Project>

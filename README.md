@@ -60,6 +60,8 @@ Example demonstrates how different size icons rendered in the menus and toolbars
 
 [VB.NET](CommandGroupIcons/vb)
 
+[C#](CommandGroupIcons/cs)
+
 # Weldment Profiles Selector
 
 Example demonstrates how to create dynamic cascading combo boxes in the Property Manager Page which select weldment profiles (standard, type and size)
@@ -107,3 +109,9 @@ Example demonstrates how to host WPF control in Task Pane and how to create MSI-
 Example demonstrates how to create macro feature without geometry with custom error messages
 
 [C#](DimensionWatcher/cs)
+
+# .NET 6 SOLIDWORKS Add-In With Public API
+
+This example demonstrates how to create SOLIDWORKS add-in using C# .NET 6 and expose a public API
+
+[C#](AddInApiNet6/cs)

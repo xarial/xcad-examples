@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Xarial.XCad.Samples.SampleAddIn2</RootNamespace>
+    <EnableComHosting>true</EnableComHosting>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0-preview.4297" />
+  </ItemGroup>
+
+</Project>

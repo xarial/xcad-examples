@@ -21,7 +21,10 @@ namespace ttl
     {
         public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument model, ShaftChamferData data, bool isPreview, out AlignDimensionDelegate<ShaftChamferData> alignDim)
         {
-            var dir = data.Edge.AdjacentEntities.OfType<ISwPlanarFace>().First().Definition.Plane.Normal * -1;
+            var planarFace = data.Edge.AdjacentEntities.OfType<ISwPlanarFace>().First();
+            var sense = planarFace.Face.FaceInSurfaceSense();
+
+            var dir = planarFace.Definition.Plane.Normal * (sense ? 1 : -1);
 
             var centerPt = data.Edge.Definition.Center;
             var largeRad = data.Edge.Definition.Diameter / 2;

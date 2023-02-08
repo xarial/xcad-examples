@@ -40,6 +40,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// This control will have standard diameter icon in the NumberBox
         /// </summary>
         [StandardControlIcon(BitmapLabelType_e.Diameter)]
+        [Label("Number Box:")]
         public int NumberBoxStandardIcon { get; set; }
 
         /// <summary>
