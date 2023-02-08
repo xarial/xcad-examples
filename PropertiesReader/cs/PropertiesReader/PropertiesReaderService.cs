@@ -33,7 +33,7 @@ namespace PropertiesReader
                 {
                     try
                     {
-                        return x.Path;
+                        return x.ReferencedDocument.Path;
                     }
                     catch
                     {
@@ -43,7 +43,7 @@ namespace PropertiesReader
                 .Select(x => x.First().ReferencedDocument)
                 .Where(x => x.IsCommitted).ToArray();
 
-            foreach (var refDoc in refDocs) 
+            foreach (var refDoc in refDocs)
             {
                 var row = prpsTable.NewRow();
                 row[FILE_PATH_COLUMN_NAME] = refDoc.Path;

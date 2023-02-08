@@ -36,8 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SolidWorks.Interop.swdocumentmgr, Version=29.1.0.61, Culture=neutral, PublicKeyToken=e52dfa2d3a1e978a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XCad.SolidWorks.DocumentManager.Interops.0.1.0\lib\net40\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.swdocumentmgr, Version=31.0.1.4, Culture=neutral, PublicKeyToken=e52dfa2d3a1e978a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XCad.SwDocumentManager.0.8.0-dev.4597\lib\net461\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
@@ -54,14 +54,14 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xarial.XCad, Version=0.7.5.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XCad.0.7.5\lib\net461\Xarial.XCad.dll</HintPath>
+    <Reference Include="Xarial.XCad, Version=0.8.0.4597, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XCad.0.8.0-dev.4597\lib\net461\Xarial.XCad.dll</HintPath>
     </Reference>
-    <Reference Include="Xarial.XCad.SwDocumentManager, Version=0.7.5.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XCad.SwDocumentManager.0.7.5\lib\net461\Xarial.XCad.SwDocumentManager.dll</HintPath>
+    <Reference Include="Xarial.XCad.SwDocumentManager, Version=0.8.0.4597, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XCad.SwDocumentManager.0.8.0-dev.4597\lib\net461\Xarial.XCad.SwDocumentManager.dll</HintPath>
     </Reference>
-    <Reference Include="Xarial.XCad.Toolkit, Version=0.7.5.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xarial.XCad.Toolkit.0.7.5\lib\net461\Xarial.XCad.Toolkit.dll</HintPath>
+    <Reference Include="Xarial.XCad.Toolkit, Version=0.8.0.4597, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xarial.XCad.Toolkit.0.8.0-dev.4597\lib\net461\Xarial.XCad.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Attach to SOLIDWORKS": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\SOLIDWORKS Corp\\SOLIDWORKS (3)\\SLDWORKS.exe"
+    }
+  }
+}

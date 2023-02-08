@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteModuleBuilderServer", "RemoteModuleBuilderServer\RemoteModuleBuilderServer.csproj", "{9A9EB885-19E5-4BED-9FD3-F4E592DA14AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteModuleBuilderClient", "RemoteModuleBuilderClient\RemoteModuleBuilderClient.csproj", "{934EDBF0-02E8-4F5F-9585-2A9D092CCC02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A9EB885-19E5-4BED-9FD3-F4E592DA14AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A9EB885-19E5-4BED-9FD3-F4E592DA14AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A9EB885-19E5-4BED-9FD3-F4E592DA14AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A9EB885-19E5-4BED-9FD3-F4E592DA14AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{934EDBF0-02E8-4F5F-9585-2A9D092CCC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{934EDBF0-02E8-4F5F-9585-2A9D092CCC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{934EDBF0-02E8-4F5F-9585-2A9D092CCC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{934EDBF0-02E8-4F5F-9585-2A9D092CCC02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79A778EB-DBB6-4B44-BC21-2985ED123101}
+	EndGlobalSection
+EndGlobal

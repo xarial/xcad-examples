@@ -1,0 +1,49 @@
+﻿<Window x:Class="Xarial.XCad.Examples.Sw.StandAloneModelBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Xarial.XCad.Examples.Sw.StandAloneModelBuilder"
+        xmlns:xctrls="clr-namespace:Xarial.XToolkit.Wpf.Controls;assembly=Xarial.XToolkit.Wpf"
+        mc:Ignorable="d"
+        Title="SOLIDWORKS Model Builder" Height="450" Width="800">
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Parameters" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <xctrls:LabeledControl Label="Height:" Margin="5" LabelMargin="5" GridSharedSizeGroup="Param">
+                    <xctrls:NumberBoxDouble Value="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged}" MinimumValue="100" MaximumValue="1000" Increment="10"/>
+                </xctrls:LabeledControl>
+                <xctrls:LabeledControl Label="Width:" Margin="5" LabelMargin="5" GridSharedSizeGroup="Param">
+                    <xctrls:NumberBoxDouble Value="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged}" MinimumValue="100" MaximumValue="1000" Increment="10"/>
+                </xctrls:LabeledControl>
+                <xctrls:LabeledControl Label="Depth:" Margin="5" LabelMargin="5" GridSharedSizeGroup="Param">
+                    <xctrls:NumberBoxDouble Value="{Binding Path=Depth, UpdateSourceTrigger=PropertyChanged}" MinimumValue="100" MaximumValue="1000" Increment="10"/>
+                </xctrls:LabeledControl>
+                <xctrls:LabeledControl Label="Number Of Drawers:" Margin="5" LabelMargin="5" GridSharedSizeGroup="Param">
+                    <xctrls:NumberBoxInteger Value="{Binding Path=NumberOfDrawers, UpdateSourceTrigger=PropertyChanged}" MinimumValue="1" MaximumValue="10" Increment="1"/>
+                </xctrls:LabeledControl>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Preview" Grid.Column="1" Margin="5">
+            <WindowsFormsHost Margin="5">
+                <WindowsFormsHost.Child>
+                    <local:EDrawingsAxHost x:Name="edrwHostControl"/>
+                </WindowsFormsHost.Child>
+            </WindowsFormsHost>
+        </GroupBox>
+        <Button Grid.Row="1" Margin="5" Width="100" HorizontalAlignment="Right" Command="{Binding Path=GenerateCommand}">
+            <TextBlock Text="Generate" Margin="5"/>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" Command="{Binding Path=SaveCommand}">
+            <TextBlock Text="Save" Margin="5"/>
+        </Button>
+    </Grid>
+</Window>

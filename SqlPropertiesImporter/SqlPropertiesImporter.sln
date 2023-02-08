@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlPropertiesImporter", "SqlPropertiesImporter\SqlPropertiesImporter.csproj", "{A839284F-DEA7-4B2C-9107-A46591EDB3CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A839284F-DEA7-4B2C-9107-A46591EDB3CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A839284F-DEA7-4B2C-9107-A46591EDB3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A839284F-DEA7-4B2C-9107-A46591EDB3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A839284F-DEA7-4B2C-9107-A46591EDB3CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE843B01-2965-4860-8D9C-F04E9EDBEB8D}
+	EndGlobalSection
+EndGlobal
