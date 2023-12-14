@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RootNamespace>Xarial.XCad.Examples</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0-beta.4913" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SharedLib">
+      <HintPath>..\Lib\1.0.0.0\SharedLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
