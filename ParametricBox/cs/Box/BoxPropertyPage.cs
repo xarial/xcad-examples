@@ -45,7 +45,7 @@ namespace Xarial.XCad.Examples.Sw.ParametricBox
         {
             [StandardControlIcon(BitmapLabelType_e.SelectFace)]
             [Description("Face or plane to place box on")]
-            [SelectionBoxOptions(Filters = new SelectType_e[] { SelectType_e.Faces, SelectType_e.Planes },
+            [SelectionBoxOptions(Filters = new Type[] { typeof(IXPlane), typeof(IXFace) },
                 CustomFilter = typeof(PlanarRegionSelectionFilter))]
             public IXEntity PlaneOrFace { get; set; }
         }
