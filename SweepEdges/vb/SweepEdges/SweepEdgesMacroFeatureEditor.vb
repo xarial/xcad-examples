@@ -1,6 +1,8 @@
 ﻿
 Imports System.Drawing
 Imports System.Runtime.InteropServices
+Imports System.Windows.Controls
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
 Imports Xarial.XCad
 Imports Xarial.XCad.Base.Attributes
 Imports Xarial.XCad.Features.CustomFeature
@@ -11,6 +13,7 @@ Imports Xarial.XCad.SolidWorks
 Imports Xarial.XCad.SolidWorks.Documents
 Imports Xarial.XCad.SolidWorks.Features.CustomFeature
 Imports Xarial.XCad.SolidWorks.Geometry
+Imports Xarial.XCad.SolidWorks.Geometry.Curves
 
 <ComVisible(True)>
 <Title("Swept Edges")>
@@ -40,26 +43,66 @@ Public Class SweepEdgesMacroFeatureEditor
 
     End Class
 
-    Public Overrides Function CreateGeometry(ByVal app As ISwApplication, ByVal model As ISwDocument, ByVal data As SweepEdgesData, ByVal isPreview As Boolean, <Out> ByRef alignDim As AlignDimensionDelegate(Of SweepEdgesData)) As ISwBody()
+    Public Overrides Function CreateGeometry(app As ISwApplication, doc As ISwDocument, feat As ISwMacroFeature(Of SweepEdgesData), ByRef alignDim As AlignDimensionDelegate(Of SweepEdgesData)) As ISwBody()
 
-        Dim result = New List(Of ISwBody)()
         Dim firstCenterPt As Structures.Point = Nothing
         Dim firstDir As Vector = Nothing
 
+        Dim result = CreateSweep(app.MemoryGeometryBuilder, feat, firstCenterPt, firstDir)
+
+        alignDim = Sub(name, [dim])
+                       Select Case name
+                           Case NameOf(SweepEdgesData.Radius)
+                               Me.AlignRadialDimension([dim], firstCenterPt, firstDir)
+                       End Select
+                   End Sub
+
+        Return result
+
+    End Function
+
+    Public Overrides Function CreatePreviewGeometry(app As ISwApplication, doc As ISwDocument, feat As ISwMacroFeature(Of SweepEdgesData),
+                                                    page As SweepEdgesData, ByRef shouldHidePreviewEdit As ShouldHidePreviewEditBodyDelegate(Of SweepEdgesData, SweepEdgesData),
+                                                    ByRef assignPreviewColor As AssignPreviewBodyColorDelegate) As ISwTempBody()
+
+        Dim firstCenterPt As Structures.Point = Nothing
+        Dim firstDir As Vector = Nothing
+
+        Dim result = CreateSweep(app.MemoryGeometryBuilder, feat, firstCenterPt, firstDir)
+
+        shouldHidePreviewEdit = Function(body As IXBody, data As SweepEdgesData, prpPage As SweepEdgesData) As Boolean
+                                    Return data.Merge
+                                End Function
+
+        assignPreviewColor = Sub(body As IXBody, ByRef color As Color)
+                                 color = Color.FromArgb(100, Color.Blue)
+                             End Sub
+
+        Return result
+
+    End Function
+
+    Private Function CreateSweep(geomBuilder As IXMemoryGeometryBuilder, feat As ISwMacroFeature(Of SweepEdgesData), ByRef firstCenterPt As Structures.Point, ByRef firstDir As Vector) As ISwTempBody()
+
+        Dim result = New List(Of ISwTempBody)()
+        firstCenterPt = Nothing
+        firstDir = Nothing
+
+        Dim data = feat.Parameters
+
         For Each edgeGroup In data.Edges.GroupBy(Function(e) e.Body, New SweepEdgesBodyEqualityComparer(data.Merge))
 
-            Dim mergedBody As ISwBody
+            Dim mergedBody As ISwTempBody = Nothing
 
-            mergedBody = edgeGroup.Key
-
-            If isPreview Then
-                mergedBody = mergedBody.Copy()
+            If data.Merge Then
+                'Edit bodies are permanent bodies that can be cast to memory bodies (for boolean operations) - need to get corresponding edit body to perform boolean operations
+                mergedBody = data.EditBodies.OfType(Of ISwTempBody).FirstOrDefault(Function(b) b.Equals(edgeGroup.Key))
             End If
 
-            For Each edge In edgeGroup
-                Dim path = edge.Definition
-                Dim startPt = path.StartCoordinate
-                Dim endPt = path.EndCoordinate
+            For Each path In edgeGroup.Select(Function(e) e.Definition).ToArray()
+
+                Dim startPt = path.StartPoint.Coordinate
+                Dim endPt = path.EndPoint.Coordinate
                 Dim dir = startPt - endPt
 
                 If firstCenterPt Is Nothing Then
@@ -70,11 +113,11 @@ Public Class SweepEdgesMacroFeatureEditor
                     firstDir = dir
                 End If
 
-                Dim profile = app.MemoryGeometryBuilder.CreateCircle(startPt, dir, data.Radius * 2)
-                Dim profileRegion = app.MemoryGeometryBuilder.CreateRegionFromSegments(profile)
-                Dim region = app.MemoryGeometryBuilder.CreatePlanarSheet(profileRegion).Bodies.First()
-                Dim sweep = app.MemoryGeometryBuilder.CreateSolidExtrusion(path.Length, dir, region)
-                Dim body = sweep.Bodies.OfType(Of ISwBody)().First()
+                Dim profile = geomBuilder.CreateCircle(startPt, dir, data.Radius * 2)
+                Dim profileRegion = geomBuilder.CreateRegionFromSegments(profile)
+                Dim region = geomBuilder.CreatePlanarSheet(profileRegion).Bodies.First()
+                Dim sweep = geomBuilder.CreateSolidExtrusion(path.Length, dir, region)
+                Dim body = sweep.Bodies.OfType(Of ISwTempBody)().First()
 
                 If data.Merge Then
                     mergedBody = mergedBody.Add(body)
@@ -88,22 +131,8 @@ Public Class SweepEdgesMacroFeatureEditor
             End If
         Next
 
-            alignDim = Sub(name, [dim])
-                       Select Case name
-                           Case NameOf(SweepEdgesData.Radius)
-                               Me.AlignRadialDimension([dim], firstCenterPt, firstDir)
-                       End Select
-                   End Sub
-
         Return result.ToArray()
-    End Function
 
-    Public Overrides Function ShouldHidePreviewEditBody(body As IXBody, data As SweepEdgesData, page As SweepEdgesData) As Boolean
-        Return Not data.Merge
     End Function
-
-    Public Overrides Sub AssignPreviewBodyColor(body As IXBody, ByRef color As Color)
-        color = Color.FromArgb(100, Color.Blue)
-    End Sub
 
 End Class

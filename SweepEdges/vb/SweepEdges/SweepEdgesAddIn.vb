@@ -23,7 +23,7 @@ Public Class SweepEdgesAddIn
     Private Sub OnButtonClick(ByVal spec As Commands_e)
         Select Case spec
             Case Commands_e.InsertSweepEdges
-                Application.Documents.Active.Features.CreateCustomFeature(Of SweepEdgesMacroFeatureEditor, SweepEdgesData, SweepEdgesData)()
+                Application.Documents.Active.Features.CreateCustomFeature(Of SweepEdgesMacroFeatureEditor, SweepEdgesData, SweepEdgesData)(New SweepEdgesData())
         End Select
     End Sub
 
