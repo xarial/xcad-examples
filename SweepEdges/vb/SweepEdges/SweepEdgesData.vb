@@ -48,15 +48,13 @@ Public Class SweepEdgesData
 
     Private Sub ResolveMerge()
         EditBodies = New List(Of ISwBody)()
-        If Merge Then
-            If m_Edges IsNot Nothing Then
-                For Each edge As ISwLinearEdge In m_Edges
-                    Dim body = edge.Body
-                    If Not EditBodies.Any(Function(b) b.Equals(body)) Then
-                        EditBodies.Add(body)
-                    End If
-                Next
-            End If
+        If m_Edges IsNot Nothing Then
+            For Each edge As ISwLinearEdge In m_Edges
+                Dim body = edge.Body
+                If Not EditBodies.Any(Function(b) b.Equals(body)) Then
+                    EditBodies.Add(body)
+                End If
+            Next
         End If
     End Sub
 

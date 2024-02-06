@@ -50,6 +50,13 @@ Public Class SweepEdgesMacroFeatureEditor
 
         Dim result = CreateSweep(app.MemoryGeometryBuilder, feat, firstCenterPt, firstDir)
 
+        Dim data = feat.Parameters
+
+        'SW API Bug wheer edit body cannot be removed, instead always acquiring the edit bodies and merge or return as is depending on the setting
+        If Not data.Merge Then
+            result = result.Union(data.EditBodies.Select(Function(b) b.Copy).Cast(Of ISwTempBody)).ToArray()
+        End If
+
         alignDim = Sub(name, [dim])
                        Select Case name
                            Case NameOf(SweepEdgesData.Radius)
@@ -99,6 +106,7 @@ Public Class SweepEdgesMacroFeatureEditor
                 mergedBody = data.EditBodies.OfType(Of ISwTempBody).FirstOrDefault(Function(b) b.Equals(edgeGroup.Key))
             End If
 
+            'Need to get curves of edges before mergin as object might be disconnected
             For Each path In edgeGroup.Select(Function(e) e.Definition).ToArray()
 
                 Dim startPt = path.StartPoint.Coordinate
