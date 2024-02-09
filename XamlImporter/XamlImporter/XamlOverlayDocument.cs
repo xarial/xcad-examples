@@ -210,7 +210,10 @@ namespace Xarial.XCad.Examples.Sw.XamlImporter
                 m_View.RenderCustomGraphics -= OnRenderCustomGraphics;
             }
 
-            m_GLControl.Dispose();
+            if (m_GLControl != null)
+            {
+                m_GLControl.Dispose();
+            }
         }
     }
 }
