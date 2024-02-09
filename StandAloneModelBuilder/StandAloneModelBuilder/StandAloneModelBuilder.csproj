@@ -6,15 +6,51 @@
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <RootNamespace>Xarial.XCad.Examples.Sw.StandAloneModelBuilder</RootNamespace>
+    <AssemblyName>ModelBuilder</AssemblyName>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0-dev.4598" />
-    <PackageReference Include="Xarial.XToolkit.Wpf" Version="0.4.0-alpha.4588" />
+    <None Remove="drawer-icon.png" />
+    <None Remove="Resources\drawer-icon.png" />
+    <None Remove="Resources\xarial-logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\xarial-logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0" />
+    <PackageReference Include="Xarial.XToolkit.Wpf" Version="0.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="drawer-icon.png" />
+    <Resource Include="Resources\drawer-icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

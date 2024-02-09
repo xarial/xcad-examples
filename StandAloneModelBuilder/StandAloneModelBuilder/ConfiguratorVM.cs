@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -19,6 +21,7 @@ namespace Xarial.XCad.Examples.Sw.StandAloneModelBuilder
 
         public ICommand GenerateCommand { get; }
         public ICommand SaveCommand { get; }
+        public ICommand OpenUrlCommand { get; }
 
         private readonly Configurator m_Configurator;
 
@@ -35,6 +38,7 @@ namespace Xarial.XCad.Examples.Sw.StandAloneModelBuilder
 
             GenerateCommand = new RelayCommand(Generate);
             SaveCommand = new RelayCommand(Save, () => m_CurrentDrawerModel != null);
+            OpenUrlCommand = new RelayCommand(OpenUrl);
         }
 
         private void Generate()
@@ -52,6 +56,17 @@ namespace Xarial.XCad.Examples.Sw.StandAloneModelBuilder
         private void Save()
         {
             m_CurrentDrawerModel.SaveAs("");
+        }
+
+        private void OpenUrl()
+        {
+            try
+            {
+                Process.Start("https://xarial.com/");
+            }
+            catch
+            {
+            }
         }
 
         public void Dispose()

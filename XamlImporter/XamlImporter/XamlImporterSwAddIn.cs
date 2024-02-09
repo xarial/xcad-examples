@@ -14,6 +14,7 @@ using System.Windows.Media.Media3D;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.Base.Enums;
 using Xarial.XCad.Documents;
+using Xarial.XCad.Documents.Extensions;
 using Xarial.XCad.Examples.Sw.XamlImporter.Properties;
 using Xarial.XCad.SolidWorks;
 using Xarial.XCad.UI.Commands;

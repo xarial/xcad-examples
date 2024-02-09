@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.UI.PropertyPage.Attributes;
 using Xarial.XCad.UI.PropertyPage.Base;
 using Xarial.XCad.UI.PropertyPage.Services;
@@ -19,13 +22,22 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// Override <see cref="ToString"/> method to provide a display name for the item
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToString() => Name;
+    }
+
+    [DisplayName("Custom Attributed Item")]
+    [Description("Custom item with predefined description")]
+    public class AttributedCustomItem : CustomItem
+    {
+        public AttributedCustomItem() : base("Custom Attributed Item")
         {
-            return Name;
         }
     }
 
-    public class CustomItemsProvider : ICustomItemsProvider
+    /// <summary>
+    /// Items provider which provides dynamic values based on the dependency
+    /// </summary>
+    public class CustomDynamicItemsProvider : ICustomItemsProvider
     {
         public IEnumerable<object> ProvideItems(IXApplication app, IControl[] dependencies)
         {
@@ -40,11 +52,43 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         }
     }
 
+    /// <summary>
+    /// Custom items provider which provides predefined custom items
+    /// </summary>
+    public class CustomStaticItemsProvider : ICustomItemsProvider
+    {
+        private static readonly CustomItem[] m_CustomItems = new CustomItem[]
+        {
+            new CustomItem("Item A"),
+            new CustomItem("Item B"),
+            new CustomItem("Item C"),
+            new AttributedCustomItem()
+        };
+
+        public IEnumerable<object> ProvideItems(IXApplication app, IControl[] dependencies)
+            => m_CustomItems;
+    }
+
     public enum EnumItemsSource_e
     {
         Value1,
         Value2,
         Value3
+    }
+
+    [Flags]
+    public enum FlagEnumItemsSource_e 
+    {
+        None = 0,
+        Item1 = 1,
+        Item2 = 2,
+
+        [Title("Item1 + Item2")]
+        [Description("Combined Item1 and Item2")]
+        Item1_2 =  Item1 | Item2,
+
+        Item3 = 4,
+        Item4 = 8
     }
 
     /// <summary>
@@ -60,11 +104,11 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         public EnumItemsSource_e ComboBox { get; set; }
 
         /// <summary>
-        /// This ComboBox will use items source defined by <see cref="CustomItemsProvider"/>.
+        /// This ComboBox will use items source defined by <see cref="CustomDynamicItemsProvider"/>.
         /// This ComboBox will also depend on the values of <see cref="ComboBox"/> as it is linked via dependency
-        /// See <see cref="CustomItemsProvider.ProvideItems(IXApplication, IControl[])"/> for information how the items are created
+        /// See <see cref="CustomDynamicItemsProvider.ProvideItems(IXApplication, IControl[])"/> for information how the items are created
         /// </summary>
-        [ComboBox(typeof(CustomItemsProvider), "MyComboBox")]
+        [ComboBox(typeof(CustomDynamicItemsProvider), "MyComboBox")]
         public string DependencyComboBox { get; set; }
 
         /// <summary>
@@ -108,10 +152,25 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         public List<CustomItem> ListBoxItem { get; set; }
 
         /// <summary>
-        /// Items source for ListBox and ComboBox can be specified as static values
+        /// Items source for ListBox, ComboBox, OptionBox, CheckBoxList can be specified as static values
         /// </summary>
         [ListBox(1, 2, 3, 4, 5)]
         public int StaticListBox { get; set; } = 4;
+
+        /// <summary>
+        /// Items source for ListBox, ComboBox, OptionBox, CheckBoxList can be specified as static values
+        /// </summary>
+        [ComboBox(1, 2, 3, 4, 5)]
+        public int StaticComboBox { get; set; } = 2;
+
+        [CheckBoxList]
+        public FlagEnumItemsSource_e FlagEnumCheckBoxList { get; set; }
+
+        /// <summary>
+        /// Option box with the items provider
+        /// </summary>
+        [OptionBox(typeof(CustomStaticItemsProvider))]
+        public CustomItem StaticOptionBox { get; set; }
 
         public ItemSourceControlsGroup() 
         {

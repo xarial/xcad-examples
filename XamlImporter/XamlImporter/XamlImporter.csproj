@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="OpenTK.GLControl" Version="3.3.3" />
-    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0-dev.4598" />
+    <PackageReference Include="Xarial.XCad.SolidWorks" Version="0.8.0" />
   </ItemGroup>
 
   <ItemGroup>
