@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using ttl.Properties;
+using Xarial.XCad.Annotations;
 using Xarial.XCad.Base.Attributes;
 using Xarial.XCad.Features.CustomFeature;
-using Xarial.XCad.Features.CustomFeature.Delegates;
 using Xarial.XCad.Geometry;
 using Xarial.XCad.Geometry.Structures;
 using Xarial.XCad.SolidWorks;
@@ -17,68 +17,97 @@ namespace ttl
     [ComVisible(true)]
     [Title("Shaft-Chamfer")]
     [Icon(typeof(Resources), nameof(Resources.shaft_chamfer))]
-    public class ShaftChamferMacroFeatureDefinition : SwMacroFeatureDefinition<ShaftChamferData, ShaftChamferData>
+    public partial class ShaftChamferMacroFeatureDefinition : SwMacroFeatureDefinition<ShaftChamferData, ShaftChamferData>
     {
-        public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument model, ShaftChamferData data, bool isPreview, out AlignDimensionDelegate<ShaftChamferData> alignDim)
+        private static class FeatureParameters 
         {
-            var planarFace = data.Edge.AdjacentEntities.OfType<ISwPlanarFace>().First();
-            var sense = planarFace.Face.FaceInSurfaceSense();
+            internal const string Direction = "Direction";
+            internal const string CenterPoint = "CenterPoint";
+            internal const string LargeRadius = "LargeRadius";
+            internal const string Height = "Height";
+        }
 
-            var dir = planarFace.Definition.Plane.Normal * (sense ? 1 : -1);
+        public override ISwBody[] CreateGeometry(ISwApplication app, ISwDocument doc, ISwMacroFeature<ShaftChamferData> feat)
+        {
+            var data = feat.Parameters;
 
-            var centerPt = data.Edge.Definition.Center;
-            var largeRad = data.Edge.Definition.Diameter / 2;
-
-            if (data.Radius >= largeRad)
+            if (data.Edge != null)
             {
-                throw new Exception($"Specified radius must not exceed {Math.Round(largeRad * 1000, 2)} mm");
-            }
+                var planarFace = data.Edge.AdjacentEntities.OfType<ISwPlanarFace>().FirstOrDefault();
 
-            var x = largeRad - data.Radius;
-            var height = x / Math.Tan(data.Angle);
-
-            var coneBody = (ISwBody)(app.MemoryGeometryBuilder.CreateSolidCone(centerPt, dir, data.Radius * 2, largeRad * 2, height).Bodies.First());
-
-            var cylBody = (ISwBody)(app.MemoryGeometryBuilder.CreateSolidCylinder(centerPt, dir, largeRad * 2, height).Bodies.First());
-
-            var targBody = data.Body;
-
-            if (isPreview)
-            {
-                targBody = (ISwBody)targBody.Copy();
-            }
-
-            var result = targBody.Substract(cylBody.Substract(coneBody).First()).First();
-
-            alignDim = new AlignDimensionDelegate<ShaftChamferData>((p, d) =>
-            {
-                switch (p)
+                if (planarFace != null)
                 {
-                    case nameof(data.Radius):
-                        this.AlignRadialDimension(d, centerPt, dir);
-                        break;
+                    var dir = planarFace.GetNormal() * -1;
 
-                    case nameof(data.Angle):
-                        Vector refVec;
-                        var yVec = new Vector(0, 1, 0);
-                        if (dir.IsSame(yVec))
-                        {
-                            refVec = new Vector(1, 0, 0);
-                        }
-                        else
-                        {
-                            refVec = yVec.Cross(dir);
-                        }
+                    var centerPt = data.Edge.Definition.Geometry.CenterAxis.Point;
+                    var largeRad = data.Edge.Definition.Geometry.Diameter / 2;
 
-                        var refPt = centerPt.Move(refVec, largeRad);
-                        var anglCenterPt = refPt.Move(dir, height);
+                    if (data.Radius < largeRad)
+                    {
+                        var height = (largeRad - data.Radius) / Math.Tan(data.Angle);
 
-                        this.AlignAngularDimension(d, anglCenterPt, refPt, dir.Cross(refVec));
-                        break;
+                        var coneBody = (ISwTempBody)app.MemoryGeometryBuilder.CreateSolidCone(centerPt, dir, data.Radius * 2, largeRad * 2, height).Bodies.First();
+
+                        var cylBody = (ISwTempBody)app.MemoryGeometryBuilder.CreateSolidCylinder(centerPt, dir, largeRad * 2, height).Bodies.First();
+
+                        var targBody = (ISwTempBody)data.Body;
+
+                        var result = targBody.Substract(cylBody.Substract(coneBody).First()).First();
+
+                        feat.Tags.Put(FeatureParameters.Direction, dir);
+                        feat.Tags.Put(FeatureParameters.CenterPoint, centerPt);
+                        feat.Tags.Put(FeatureParameters.LargeRadius, largeRad);
+                        feat.Tags.Put(FeatureParameters.Height, height);
+
+                        return new ISwBody[] { result };
+                    }
+                    else 
+                    {
+                        throw new UserException($"Specified radius must not exceed {Math.Round(largeRad * 1000, 2)} mm");
+                    }
                 }
-            });
+                else 
+                {
+                    throw new UserException("Failed to find the planar face adjacent to edge");
+                }
+            }
+            else 
+            {
+                throw new UserException("Select circular edge");
+            }
+        }
 
-            return new ISwBody[] { result };
+        public override void OnAlignDimension(IXCustomFeature<ShaftChamferData> feat, string paramName, IXDimension dim)
+        {
+            var dir = feat.Tags.Get<Vector>(FeatureParameters.Direction);
+            var centerPt = feat.Tags.Get<Point>(FeatureParameters.CenterPoint);
+            var largeRad = feat.Tags.Get<double>(FeatureParameters.LargeRadius);
+            var height = feat.Tags.Get<double>(FeatureParameters.Height);
+
+            switch (paramName)
+            {
+                case nameof(ShaftChamferData.Radius):
+                    this.AlignRadialDimension(dim, centerPt, dir);
+                    break;
+
+                case nameof(ShaftChamferData.Angle):
+                    Vector refVec;
+                    var yVec = new Vector(0, 1, 0);
+                    if (dir.IsSame(yVec))
+                    {
+                        refVec = new Vector(1, 0, 0);
+                    }
+                    else
+                    {
+                        refVec = yVec.Cross(dir);
+                    }
+
+                    var refPt = centerPt.Move(refVec, largeRad);
+                    var anglCenterPt = refPt.Move(dir, height);
+
+                    this.AlignAngularDimension(dim, anglCenterPt, refPt, dir.Cross(refVec));
+                    break;
+            }
         }
     }
 }

@@ -10,18 +10,26 @@ Imports Xarial.XCad.UI.PropertyPage.Attributes
 Imports Xarial.XCad.UI.PropertyPage.Enums
 
 Namespace ttl
-
     <Title("Insert Shaft Chamfer")>
     <Icon(GetType(Resources), NameOf(Resources.shaft_chamfer))>
     <ComVisible(True)>
     Public Class ShaftChamferData
         Inherits SwPropertyManagerPageHandler
-
         Private m_Edge As ISwCircularEdge
 
         <ExcludeControl>
         <ParameterEditBody>
         Public Property Body As ISwBody
+            Get
+                Return If(m_Body, Function()
+                                      m_Body = Edge?.Body
+                                      Return m_Body
+                                  End Function())
+            End Get
+            Set(ByVal value As ISwBody)
+                m_Body = value
+            End Set
+        End Property
 
         Public Property Edge As ISwCircularEdge
             Get
@@ -29,7 +37,6 @@ Namespace ttl
             End Get
             Set(ByVal value As ISwCircularEdge)
                 m_Edge = value
-                Body = value?.Body
             End Set
         End Property
 
@@ -45,6 +52,6 @@ Namespace ttl
         <Title("Angle")>
         Public Property Angle As Double = Math.PI / 9
 
+        Private m_Body As ISwBody
     End Class
-
 End Namespace

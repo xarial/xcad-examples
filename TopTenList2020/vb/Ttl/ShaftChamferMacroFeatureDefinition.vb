@@ -1,8 +1,10 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System
+Imports System.Linq
+Imports System.Runtime.InteropServices
 Imports Ttl.My.Resources
+Imports Xarial.XCad.Annotations
 Imports Xarial.XCad.Base.Attributes
 Imports Xarial.XCad.Features.CustomFeature
-Imports Xarial.XCad.Features.CustomFeature.Delegates
 Imports Xarial.XCad.Geometry
 Imports Xarial.XCad.Geometry.Structures
 Imports Xarial.XCad.SolidWorks
@@ -11,62 +13,84 @@ Imports Xarial.XCad.SolidWorks.Features.CustomFeature
 Imports Xarial.XCad.SolidWorks.Geometry
 
 Namespace ttl
-
     <ComVisible(True)>
     <Title("Shaft-Chamfer")>
     <Icon(GetType(Resources), NameOf(Resources.shaft_chamfer))>
-    Public Class ShaftChamferMacroFeatureDefinition
+    Public Partial Class ShaftChamferMacroFeatureDefinition
         Inherits SwMacroFeatureDefinition(Of ShaftChamferData, ShaftChamferData)
 
-        Public Overrides Function CreateGeometry(ByVal app As ISwApplication, ByVal model As ISwDocument, ByVal data As ShaftChamferData, ByVal isPreview As Boolean, <Out> ByRef alignDim As AlignDimensionDelegate(Of ShaftChamferData)) As ISwBody()
+        Private NotInheritable Class FeatureParameters
+            Friend Const Direction As String = "Direction"
+            Friend Const CenterPoint As String = "CenterPoint"
+            Friend Const LargeRadius As String = "LargeRadius"
+            Friend Const Height As String = "Height"
+        End Class
 
-            Dim planarFace = data.Edge.AdjacentEntities.OfType(Of ISwPlanarFace)().First()
-            Dim sense As Boolean = planarFace.Face.FaceInSurfaceSense()
+        Public Overrides Function CreateGeometry(ByVal app As ISwApplication, ByVal doc As ISwDocument, ByVal feat As ISwMacroFeature(Of ShaftChamferData)) As ISwBody()
+            Dim data = feat.Parameters
 
-            Dim dir = planarFace.Definition.Plane.Normal * IIf(sense, 1, -1)
-            Dim centerPt = data.Edge.Definition.Center
-            Dim largeRad = data.Edge.Definition.Diameter / 2
+            If data.Edge IsNot Nothing Then
+                Dim planarFace = data.Edge.AdjacentEntities.OfType(Of ISwPlanarFace)().FirstOrDefault()
 
-            If data.Radius >= largeRad Then
-                Throw New Exception($"Specified radius must not exceed {Math.Round(largeRad * 1000, 2)} mm")
+                If planarFace IsNot Nothing Then
+                    Dim dir = planarFace.GetNormal() * -1
+
+                    Dim centerPt = data.Edge.Definition.Geometry.CenterAxis.Point
+                    Dim largeRad = data.Edge.Definition.Geometry.Diameter / 2
+
+                    If data.Radius < largeRad Then
+                        Dim height = (largeRad - data.Radius) / Math.Tan(data.Angle)
+
+                        Dim coneBody = CType(app.MemoryGeometryBuilder.CreateSolidCone(centerPt, dir, data.Radius * 2, largeRad * 2, height).Bodies.First(), ISwTempBody)
+
+                        Dim cylBody = CType(app.MemoryGeometryBuilder.CreateSolidCylinder(centerPt, dir, largeRad * 2, height).Bodies.First(), ISwTempBody)
+
+                        Dim targBody = CType(data.Body, ISwTempBody)
+
+                        Dim result = targBody.Substract(cylBody.Substract(coneBody).First()).First()
+
+                        feat.Tags.Put(FeatureParameters.Direction, dir)
+                        feat.Tags.Put(FeatureParameters.CenterPoint, centerPt)
+                        feat.Tags.Put(FeatureParameters.LargeRadius, largeRad)
+                        feat.Tags.Put(FeatureParameters.Height, height)
+
+                        Return New ISwBody() {result}
+                    Else
+                        Throw New UserException($"Specified radius must not exceed {Math.Round(largeRad * 1000, 2)} mm")
+                    End If
+                Else
+                    Throw New UserException("Failed to find the planar face adjacent to edge")
+                End If
+            Else
+                Throw New UserException("Select circular edge")
             End If
-
-            Dim x = largeRad - data.Radius
-            Dim height = x / Math.Tan(data.Angle)
-            Dim coneBody = CType(app.MemoryGeometryBuilder.CreateSolidCone(centerPt, dir, data.Radius * 2, largeRad * 2, height).Bodies.First(), ISwBody)
-            Dim cylBody = CType(app.MemoryGeometryBuilder.CreateSolidCylinder(centerPt, dir, largeRad * 2, height).Bodies.First(), ISwBody)
-            Dim targBody = data.Body
-
-            If isPreview Then
-                targBody = targBody.Copy()
-            End If
-
-            Dim result = targBody.Substract(cylBody.Substract(coneBody).First()).First()
-
-            alignDim = New AlignDimensionDelegate(Of ShaftChamferData)(
-                Sub(p, d)
-                    Select Case p
-                        Case NameOf(data.Radius)
-                            Me.AlignRadialDimension(d, centerPt, dir)
-                        Case NameOf(data.Angle)
-                            Dim refVec As Vector
-                            Dim yVec = New Vector(0, 1, 0)
-
-                            If dir.IsSame(yVec) Then
-                                refVec = New Vector(1, 0, 0)
-                            Else
-                                refVec = yVec.Cross(dir)
-                            End If
-
-                            Dim refPt = centerPt.Move(refVec, largeRad)
-                            Dim anglCenterPt = refPt.Move(dir, height)
-                            Me.AlignAngularDimension(d, anglCenterPt, refPt, dir.Cross(refVec))
-                    End Select
-                End Sub)
-
-            Return New ISwBody() {result}
-
         End Function
-    End Class
 
+        Public Overrides Sub OnAlignDimension(ByVal feat As IXCustomFeature(Of ShaftChamferData), ByVal paramName As String, ByVal [dim] As IXDimension)
+
+            Dim dir = feat.Tags.Get(Of Vector)(FeatureParameters.Direction)
+            Dim centerPt = feat.Tags.Get(Of Point)(FeatureParameters.CenterPoint)
+            Dim largeRad = feat.Tags.Get(Of Double)(FeatureParameters.LargeRadius)
+            Dim height = feat.Tags.Get(Of Double)(FeatureParameters.Height)
+
+            Select Case paramName
+                Case NameOf(ShaftChamferData.Radius)
+                    AlignRadialDimension([dim], centerPt, dir)
+
+                Case NameOf(ShaftChamferData.Angle)
+                    Dim refVec As Vector
+                    Dim yVec = New Vector(0, 1, 0)
+                    If dir.IsSame(yVec) Then
+                        refVec = New Vector(1, 0, 0)
+                    Else
+                        refVec = yVec.Cross(dir)
+                    End If
+
+                    Dim refPt = centerPt.Move(refVec, largeRad)
+                    Dim anglCenterPt = refPt.Move(dir, height)
+
+                    AlignAngularDimension([dim], anglCenterPt, refPt, dir.Cross(refVec))
+            End Select
+        End Sub
+    End Class
 End Namespace

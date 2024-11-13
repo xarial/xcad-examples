@@ -20,19 +20,16 @@ namespace ttl
 
         [ExcludeControl]
         [ParameterEditBody]
-        public ISwBody Body { get; set; }
+        public ISwBody Body 
+        {
+            get => m_Body ?? (m_Body = Edge?.Body);
+            set => m_Body = value;
+        }
 
         public ISwCircularEdge Edge
         {
-            get
-            {
-                return m_Edge;
-            }
-            set
-            {
-                m_Edge = value;
-                Body = value?.Body;
-            }
+            get => m_Edge;
+            set => m_Edge = value;
         }
 
         [ParameterDimension(CustomFeatureDimensionType_e.Radial)]
@@ -46,5 +43,7 @@ namespace ttl
         [StandardControlIcon(BitmapLabelType_e.AngularDistance)]
         [Title("Angle")]
         public double Angle { get; set; } = Math.PI / 9;
+
+        private ISwBody m_Body;
     }
 }
