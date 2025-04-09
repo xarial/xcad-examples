@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SW 2023": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\SOLIDWORKS 2023\\SOLIDWORKS\\sldworks.exe"
+    }
+  }
+}

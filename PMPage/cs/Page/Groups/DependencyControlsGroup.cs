@@ -7,7 +7,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
 {
     public class EnabledDependencyHandler : IDependencyHandler
     {
-        public void UpdateState(IXApplication app, IControl source, IControl[] dependencies)
+        public void UpdateState(IXApplication app, IControl source, IControl[] dependencies, object parameter)
         {
             source.Enabled = (bool)dependencies?.First().GetValue();
         }
@@ -15,9 +15,9 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
 
     public class StateDependencyHandler : IDependencyHandler
     {
-        public void UpdateState(IXApplication app, IControl source, IControl[] dependencies)
+        public void UpdateState(IXApplication app, IControl source, IControl[] dependencies, object parameter)
         {
-            source.Visible = ((ControlState_e)dependencies?.First().GetValue() == ControlState_e.Visible);
+            source.Visible = (ControlState_e)dependencies?.First().GetValue() == ControlState_e.Visible;
         }
     }
 
@@ -35,25 +35,25 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// <summary>
         /// This CheckBox control drives the enable state of the <see cref="Text1"/> control
         /// </summary>
-        [ControlTag("Enable")]
+        [ControlTag(nameof(EnableNext))]
         public bool EnableNext { get; set; }
         
         /// <summary>
         /// The enable state of this control is driven by the value of <see cref="EnableNext"/> CheckBox
         /// </summary>
-        [DependentOn(typeof(EnabledDependencyHandler), "Enable")]
+        [DependentOn(typeof(EnabledDependencyHandler), nameof(EnableNext))]
         public string Text1 { get; set; }
 
         /// <summary>
         /// This ComboBox control drives the visibility state of the <see cref="Text2"/> control
         /// </summary>
-        [ControlTag("State")]
+        [ControlTag(nameof(StateNext))]
         public ControlState_e StateNext { get; set; }
 
         /// <summary>
         /// The enable state of this control is driven by the value of <see cref="StateNext"/> ComboBox
         /// </summary>
-        [DependentOn(typeof(StateDependencyHandler), "State")]
+        [DependentOn(typeof(StateDependencyHandler), nameof(StateNext))]
         public string Text2 { get; set; }
     }
 }

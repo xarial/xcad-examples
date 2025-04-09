@@ -42,7 +42,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// Context is used to read ad write data while getting and setting the values of the control
         /// In this example the values of the controls will be written to the dictionary
         /// </summary>
-        [DynamicControls("DictionaryDynamicControls")]
+        [DynamicControls(nameof(DynamicControls))]
         public Dictionary<string, object> DynamicControls { get; } = new Dictionary<string, object>();
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Xarial.XCad.Examples.PMPage.CSharp.Page.Groups
         /// <returns>Collection of control descriptors</returns>
         public IControlDescriptor[] CreateDynamicControls(object tag)
         {
-            if (tag.ToString() == "DictionaryDynamicControls")
+            if (tag.ToString() == nameof(DynamicControls))
             {
                 return new IControlDescriptor[]
                 {
